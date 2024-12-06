@@ -5,6 +5,7 @@ import { addEffect } from "@react-three/fiber";
 const Interface = () => {
   const time = useRef();
   const restart = useGame((state) => state.restart);
+  const start = useGame((state) => state.start);
   const phase = useGame((state) => state.phase);
 
   useEffect(() => {
@@ -32,9 +33,19 @@ const Interface = () => {
 
   return (
     <main className="interface">
-      <div className="time" ref={time}>
-        0.00
-      </div>
+      {phase === "ready" && (
+        <div>
+          <div className="start" onClick={start}>
+            Start
+          </div>
+        </div>
+      )}
+      {phase === "playing" && (
+        <div className="time" ref={time}>
+          0.00
+        </div>
+      )}
+
       {/* Restart */}
       {phase === "ended" && (
         <div className="restart" onClick={restart}>

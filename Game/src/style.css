@@ -41,3 +41,15 @@ body,
   pointer-events: auto;
   cursor: pointer;
 }
+.start {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1rem 2rem;
+  background: #000;
+  color: #fff;
+  font-size: 2rem;
+  pointer-events: auto;
+  cursor: pointer;
+}
