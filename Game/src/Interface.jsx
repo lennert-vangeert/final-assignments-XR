@@ -34,9 +34,15 @@ const Interface = () => {
   return (
     <main className="interface">
       {phase === "ready" && (
-        <div>
-          <div className="start" onClick={start}>
+        <div className="button_container">
+          <div className="main_button" onClick={start}>
             Start
+          </div>
+          <div className="main_button" >
+            Settings
+          </div>
+          <div className="main_button" >
+            Leaderboards
           </div>
         </div>
       )}
