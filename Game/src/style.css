@@ -1,8 +1,7 @@
 :root {
-    --color-primary: #d59b15;
-    --color-secondary: #000;
+  --color-primary: #363227;
+  --color-secondary: #000;
 }
-
 
 html,
 body,
@@ -33,6 +32,7 @@ body,
   right: 0;
   padding: 3rem;
   font-size: 3rem;
+  color: var(--color-primary);
 }
 
 .restart {
@@ -41,11 +41,14 @@ body,
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 1rem 2rem;
-  background: #000;
-  color: #fff;
+  background: transparent;
+  color: var(--color-primary);
   font-size: 2rem;
+  border: 2px solid var(--color-primary);
   pointer-events: auto;
   cursor: pointer;
+  transition: 0.15s ease-in-out all;
+  text-align: center;
 }
 .button_container {
   position: absolute;
@@ -73,4 +76,60 @@ body,
   background: var(--color-primary);
   color: #fff;
   transition: 0.15s ease-in-out all;
+}
+
+.title {
+  padding: 1rem 2rem;
+  color: var(--color-primary);
+  font-size: 3rem;
+  pointer-events: auto;
+  transition: 0.15s ease-in-out all;
+  text-align: center;
+}
+.subtitle {
+  padding: 1rem 2rem;
+  color: var(--color-primary);
+  font-size: 2rem;
+  pointer-events: auto;
+  transition: 0.15s ease-in-out all;
+  text-align: center;
+}
+.checkbox {
+  appearance: none;
+  pointer-events: auto; /* Allow pointer events */
+  width: 1.5rem;
+  height: 1.5rem;
+  background: transparent;
+  border: 2px solid var(--color-primary);
+  border-radius: 0.25rem;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: background 0.15s ease-in-out, transform 0.15s ease-in-out;
+}
+
+.checkbox:checked {
+  background: var(--color-primary);
+}
+
+.checkbox:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.75rem;
+  height: 0.75rem;
+  background: white;
+  transform: translate(-50%, -50%);
+  border-radius: 0.125rem;
+}
+
+.checkbox:hover {
+  transform: scale(1.1);
+  transition: 0.15s ease-in-out all;
+}
+.setting_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

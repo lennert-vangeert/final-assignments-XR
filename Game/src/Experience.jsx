@@ -12,9 +12,6 @@ import { useFrame } from "@react-three/fiber";
 import MenuPlane from "./objects/MenuPlane";
 import useGame from "./stores/useGame";
 export default function Experience() {
-  useFrame(({ camera }) => {
-    console.log(camera.position);
-  });
   const phase = useGame((state) => state.phase);
   return (
     <>

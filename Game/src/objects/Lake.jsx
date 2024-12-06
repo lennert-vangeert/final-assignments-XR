@@ -40,7 +40,7 @@ function Lake() {
       ref={ref}
       args={[geom, config]}
       rotation-x={-Math.PI / 2}
-      position={[-96, -38, 40]}
+      position={[-96, -48, -210]}
     />
   );
 }

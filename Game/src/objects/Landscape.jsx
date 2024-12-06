@@ -23,7 +23,7 @@ const Landscape = () => {
         <primitive
           object={landscape.scene}
           scale={100}
-          position={[0, -70, 0]}
+          position={[0, -80, -250]}
         />
       </RigidBody>
     </>
