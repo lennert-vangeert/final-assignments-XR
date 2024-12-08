@@ -47,6 +47,24 @@ export default create(
           return {};
         });
       },
+      // menu phase
+      menuPhase: "main",
+
+      menuMain: () => {
+        set({ menuPhase: "main" });
+      },
+      menuSettings: () => {
+        set({ menuPhase: "settings" });
+      },
+      menuLeaderboards: () => {
+        set({ menuPhase: "leaderboards" });
+      },
+      // username
+      userName: "Player",
+      setUserName: (name) => {
+        console.log("setUserName", name);
+        set({ userName: name });
+      },
     };
   })
 );

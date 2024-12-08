@@ -82248,7 +82248,11 @@ var helmet = Object.assign(
 
 // src/middleware/middelware.ts
 var registerMiddleware = (app2) => {
-  app2.use((0, import_cors.default)());
+  const corsOptions = {
+    allowedHeaders: ["Content-Type", "key"]
+    // Add custom headers
+  };
+  app2.use((0, import_cors.default)(corsOptions));
   app2.use(import_express.default.json());
   app2.use(helmet.noSniff());
   app2.use(helmet.hidePoweredBy());

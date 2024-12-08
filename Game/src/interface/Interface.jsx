@@ -1,14 +1,32 @@
 import React, { useEffect, useRef, useState } from "react";
-import useGame from "./stores/useGame";
+import useGame from "../stores/useGame";
 import { addEffect } from "@react-three/fiber";
+import Leaderboard from "./Leaderboard";
 
 const Interface = () => {
   const time = useRef();
   const restart = useGame((state) => state.restart);
   const start = useGame((state) => state.start);
   const phase = useGame((state) => state.phase);
+  const menuPhase = useGame((state) => state.menuPhase);
+  const menuMain = useGame((state) => state.menuMain);
+  const menuSettings = useGame((state) => state.menuSettings);
+  const menuLeaderboards = useGame((state) => state.menuLeaderboards);
+  const setUserName = useGame((state) => state.setUserName);
+  const userName = useGame((state) => state.userName);
 
-  const [menu, setMenu] = useState("main");
+  const onchange = (e) => {
+    setUserName(e.target.value);
+    localStorage.setItem("userName", e.target.value);
+  };
+
+  const onStart = () => {
+    if (userName === "") {
+      alert("Please enter a name");
+      return;
+    }
+    start();
+  };
 
   useEffect(() => {
     const unsubscribeEffect = addEffect(() => {
@@ -33,36 +51,41 @@ const Interface = () => {
     };
   }, []);
 
+  useEffect(() => {
+    setUserName(localStorage.getItem("userName") || "Player");
+  }, []);
+
   return (
     <main className="interface">
-      {phase === "ready" && menu === "main" && (
+      {phase === "ready" && menuPhase === "main" && (
         <div className="button_container">
           <h1 className="title">Whisker Wings</h1>
-          <div className="main_button" onClick={start}>
+          <label className="label" htmlFor="name">
+            Username
+            <input
+              onChange={onchange}
+              type="text"
+              id="name"
+              placeholder="Enter your name"
+              className="name_input"
+              value={userName}
+            />
+          </label>
+          <div className="main_button" onClick={onStart}>
             Start
           </div>
-          <div
-            className="main_button"
-            onClick={() => {
-              setMenu("settings");
-            }}
-          >
+          <div className="main_button" onClick={menuSettings}>
             Settings
           </div>
-          <div
-            className="main_button"
-            onClick={() => {
-              setMenu("leaderboards");
-            }}
-          >
-            Leaderboards
+          <div className="main_button" onClick={menuLeaderboards}>
+            Leaderboard
           </div>
         </div>
       )}
-      {phase === "ready" && menu === "settings" && (
+      {phase === "ready" && menuPhase === "settings" && (
         <div className="button_container">
           <h1 className="title">Settings</h1>
-          <div className="main_button" onClick={() => setMenu("main")}>
+          <div className="main_button" onClick={menuMain}>
             back
           </div>
           <div className="setting_container">
@@ -71,30 +94,15 @@ const Interface = () => {
           </div>
         </div>
       )}
-      {phase === "ready" && menu === "leaderboards" && (
-        <div className="button_container">
-          <h1 className="title">Leaderboards</h1>
-          <div className="main_button" onClick={() => setMenu("main")}>
-            back
-          </div>
-          <div className="leaderboard_container">
-            <div className="leaderboard_item">
-              <span className="leaderboard_rank">1</span>
-              <span className="leaderboard_name">John Doe</span>
-              <span className="leaderboard_score">120</span>
-            </div>
-            <div className="leaderboard_item">
-              <span className="leaderboard_rank">2</span>
-              <span className="leaderboard_name">Jane Doe</span>
-              <span className="leaderboard_score">100</span>
-            </div>
-            <div className="leaderboard_item">
-              <span className="leaderboard_rank">3</span>
-              <span className="leaderboard_name">Foo Bar</span>
-              <span className="leaderboard_score">80</span>
+      {phase === "ready" && menuPhase === "leaderboards" && (
+        <>
+          <div className="button_container">
+            <div className="main_button" onClick={menuMain}>
+              back
             </div>
           </div>
-        </div>
+          <Leaderboard />
+        </>
       )}
 
       {/* Time */}

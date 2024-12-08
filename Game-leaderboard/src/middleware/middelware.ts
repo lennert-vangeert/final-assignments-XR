@@ -5,7 +5,11 @@ import helmet from "helmet";
 
 const registerMiddleware = (app: Express) => {
   //cors
-  app.use(cors());
+
+  const corsOptions = {
+    allowedHeaders: ["Content-Type", "key"], // Add custom headers
+  };
+  app.use(cors(corsOptions));
 
   //json parser
   app.use(express.json());
