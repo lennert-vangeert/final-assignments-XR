@@ -1,17 +1,15 @@
 import React, { useEffect, useRef } from "react";
-import {
-  Float,
-  PresentationControls,
-  useAnimations,
-  useGLTF,
-} from "@react-three/drei";
+import { useGLTF, useAnimations } from "@react-three/drei";
 import { AnimationClip } from "three";
 import { useFrame } from "@react-three/fiber";
+import gsap from "gsap";
+import useGame from "../stores/useGame";
 
 const MenuPlane = () => {
   const plane = useGLTF("./models/plane/scene.gltf");
   const pilot = useGLTF("./models/pilot/pilot.gltf");
   const smoke = useGLTF("./models/smoke/scene.gltf");
+  const menuPhase = useGame((state) => state.menuPhase);
 
   const planeRef = useRef();
 
@@ -72,34 +70,61 @@ const MenuPlane = () => {
     }
   });
 
+  useEffect(() => {
+    if (planeRef.current) {
+      const targetPosition =
+        menuPhase === "leaderboards" ? [-201, 113, 265] : [-198, 113, 265];
+      const targetRotation =
+        menuPhase === "leaderboards"
+          ? [0, Math.PI * 0.8, 0]
+          : [0, Math.PI * 0.65, Math.PI * -0.05];
+
+      gsap.to(planeRef.current.position, {
+        x: targetPosition[0],
+        y: targetPosition[1],
+        z: targetPosition[2],
+        duration: 1,
+        ease: "power2.inOut",
+      });
+
+      gsap.to(planeRef.current.rotation, {
+        x: targetRotation[0],
+        y: targetRotation[1],
+        z: targetRotation[2],
+        duration: 1,
+        ease: "power2.inOut",
+      });
+    }
+  }, [menuPhase]);
+
   return (
-      <group
-        ref={planeRef}
-        scale={0.5}
-        rotation={[0, Math.PI * 0.65, Math.PI * -0.05]}
-        position={[-198, 113, 265]}
-      >
-        <primitive
-          object={plane.scene}
-          scale={1}
-          position={[0, 2, 0]}
-          rotation={[0, Math.PI, 0]}
-        />
+    <group
+      ref={planeRef}
+      scale={0.5}
+      rotation={[0, Math.PI * 0.65, Math.PI * -0.05]}
+      position={[-198, 113, 265]}
+    >
+      <primitive
+        object={plane.scene}
+        scale={1}
+        position={[0, 2, 0]}
+        rotation={[0, Math.PI, 0]}
+      />
 
-        <primitive
-          object={pilot.scene}
-          scale={0.3}
-          position={[0, 2, 1]}
-          rotation={[Math.PI * 0.1, Math.PI, 0]}
-        />
+      <primitive
+        object={pilot.scene}
+        scale={0.3}
+        position={[0, 2, 1]}
+        rotation={[Math.PI * 0.1, Math.PI, 0]}
+      />
 
-        <primitive
-          object={smoke.scene}
-          rotation={[Math.PI * 0.2, Math.PI, 0]}
-          scale={3.5}
-          position={[0, 4, -2]}
-        />
-      </group>
+      <primitive
+        object={smoke.scene}
+        rotation={[Math.PI * 0.2, Math.PI, 0]}
+        scale={3.5}
+        position={[0, 4, -2]}
+      />
+    </group>
   );
 };
 

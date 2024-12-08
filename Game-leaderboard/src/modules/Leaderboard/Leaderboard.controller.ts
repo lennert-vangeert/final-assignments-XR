@@ -8,7 +8,8 @@ const getLeaderboard = async (
   next: NextFunction
 ) => {
   try {
-    const leaderboard = await Leaderboard.find().sort({ createdAt: -1 });
+    // limited to 10
+    const leaderboard = await Leaderboard.find().sort({ score: -1 }).limit(10);
     res.json(leaderboard);
   } catch (err) {
     next(err);
