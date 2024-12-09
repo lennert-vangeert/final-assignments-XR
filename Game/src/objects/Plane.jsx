@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { CuboidCollider } from "@react-three/rapier";
-import { Matrix4, Quaternion, Vector3 } from "three";
+import { AnimationClip, Matrix4, Quaternion, Vector3 } from "three";
 import { updatePlaneAxis } from "../flightControls";
 import { useFrame } from "@react-three/fiber";
 
@@ -20,6 +20,23 @@ const Plane = () => {
   const groupRef = useRef();
   const helixMeshRef = useRef();
   const colliderRef = useRef();
+
+  const planeAnimations = useAnimations(plane.animations, plane.scene);
+  const smokeAnimations = useAnimations(smoke.animations, smoke.scene);
+  const animationspeed = 1;
+  useEffect(() => {
+    const singleTrack = planeAnimations.actions.Animation._clip.tracks[1];
+
+    const singleTrackClip = new AnimationClip("SingleTrackAnimation", -1, [
+      singleTrack,
+    ]);
+
+    const singleTrackAction = planeAnimations.mixer.clipAction(singleTrackClip);
+    planeAnimations.mixer.timeScale = animationspeed;
+    singleTrackAction.play();
+
+    smokeAnimations.actions["Default Take"].play();
+  }, [animationspeed]);
 
   useFrame(({ camera }) => {
     updatePlaneAxis(x, y, z, planePosition, camera);
