@@ -31,22 +31,18 @@ export function updatePlaneAxis(x, y, z, planePosition, camera) {
   // Reduced velocity increment for slower rotation
   if (controls["a"] || controls["q"]) {
     jawVelocity += 0.001; // Slower turn left
-    console.log("a");
   }
 
   if (controls["d"]) {
     jawVelocity -= 0.001; // Slower turn right
-    console.log("d");
   }
 
   if (controls["w"] || controls["z"]) {
     pitchVelocity -= 0.001; // Slower pitch up
-    console.log("w");
   }
 
   if (controls["s"] ) {
     pitchVelocity += 0.001; // Slower pitch down
-    console.log("s");
   }
 
   if (controls["r"]) {
@@ -57,7 +53,6 @@ export function updatePlaneAxis(x, y, z, planePosition, camera) {
     y.set(0, 1, 0);
     z.set(0, 0, 1);
     planePosition.set(0, 3, 7);
-    console.log("r");
   }
 
   // Apply rotation based on the velocities

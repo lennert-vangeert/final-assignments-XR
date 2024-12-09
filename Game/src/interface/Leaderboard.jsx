@@ -15,10 +15,10 @@ const Leaderboard = () => {
   }, []);
 
   if (leaderBoard.length === 0) {
-    return <div className="leaderboard_container">Loading...</div>;
+    return <div className="right_container">Loading... (api spinning up)</div>;
   } else
     return (
-      <div className="leaderboard_container">
+      <div className="right_container">
         {leaderBoard.map((item, index) => (
           <div key={index} className="leaderboard_item">
             <span className="leaderboard_rank">{index + 1}</span>

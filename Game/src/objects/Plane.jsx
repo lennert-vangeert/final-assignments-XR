@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useAnimations, useGLTF } from "@react-three/drei";
-import { CuboidCollider, RigidBody } from "@react-three/rapier";
-import { AnimationClip, Camera, Matrix4, Quaternion, Vector3 } from "three";
+import { CuboidCollider } from "@react-three/rapier";
+import { Matrix4, Quaternion, Vector3 } from "three";
 import { updatePlaneAxis } from "../flightControls";
 import { useFrame } from "@react-three/fiber";
 
@@ -49,8 +49,7 @@ const Plane = () => {
 
     delayedRotMatrix.identity().makeRotationFromQuaternion(delayedQuaternion);
 
-    // Adjust the camera position behind and above the plane
-    const cameraOffset = new Vector3(0, 10, 30); // Adjust the offset for third-person view
+    const cameraOffset = new Vector3(0, 10, 30);
     const cameraMatrix = new Matrix4()
       .multiply(
         new Matrix4().makeTranslation(
@@ -73,6 +72,15 @@ const Plane = () => {
     camera.matrixWorldNeedsUpdate = true;
 
     helixMeshRef.current.rotation.z -= 1.0;
+
+    if (colliderRef.current) {
+      const colliderOffset = new Vector3(0, 2, 0);
+      const adjustedPosition = planePosition
+        .clone()
+        .add(colliderOffset.applyQuaternion(delayedQuaternion));
+      colliderRef.current.setTranslation(adjustedPosition);
+      colliderRef.current.setRotation(delayedQuaternion);
+    }
   });
 
   useEffect(() => {
@@ -95,53 +103,40 @@ const Plane = () => {
       }
     });
   }, [plane, pilot, smoke]);
-  const planeAnimations = useAnimations(plane.animations, plane.scene);
-  const smokeAnimations = useAnimations(smoke.animations, smoke.scene);
-  const animationspeed = 1;
-  useEffect(() => {
-    const singleTrack = planeAnimations.actions.Animation._clip.tracks[1];
-
-    const singleTrackClip = new AnimationClip("SingleTrackAnimation", -1, [
-      singleTrack,
-    ]);
-
-    const singleTrackAction = planeAnimations.mixer.clipAction(singleTrackClip);
-    planeAnimations.mixer.timeScale = animationspeed;
-    singleTrackAction.play();
-
-    smokeAnimations.actions["Default Take"].play();
-  }, [animationspeed]);
 
   return (
     <>
-      {/* <RigidBody type="fixed" position={[0, 0, 0]} colliders="cuboid"> */}
-        <group ref={groupRef} scale={0.5} position={[0, -1.5, 0]}>
-          {/* camera */}
-          <group ref={helixMeshRef}></group>
-          <primitive
-            object={plane.scene}
-            scale={1}
-            position={[0, 2, 0]}
-            rotation={[0, Math.PI, 0]}
-          />
+      <group ref={groupRef} scale={0.5} position={[0, -1.5, 0]}>
+        <group ref={helixMeshRef}></group>
+        <primitive
+          object={plane.scene}
+          scale={1}
+          position={[0, 2, 0]}
+          rotation={[0, Math.PI, 0]}
+        />
 
-          <primitive
-            object={pilot.scene}
-            scale={0.3}
-            position={[0, 2.2, .6]}
-            rotation={[Math.PI * -0.1, Math.PI, 0]}
-          />
+        <primitive
+          object={pilot.scene}
+          scale={0.3}
+          position={[0, 2.2, 0.6]}
+          rotation={[Math.PI * -0.1, Math.PI, 0]}
+        />
 
-          <primitive
-            object={smoke.scene}
-            rotation={[Math.PI * -0.2, Math.PI, 0]}
-            scale={3.5}
-            position={[0, 4, -2]}
-          />
-          {/* headlights */}
-        </group>
-        <CuboidCollider ref={colliderRef} position={[0, 4, 2]} args={[5, 2, 5]}/>
-      {/* </RigidBody> */}
+        <primitive
+          object={smoke.scene}
+          rotation={[Math.PI * -0.2, Math.PI, 0]}
+          scale={3.5}
+          position={[0, 4, -2]}
+        />
+        {/* Attach collider to plane */}
+        <CuboidCollider
+          ref={colliderRef}
+          args={[5.5, 2, 5.5]}
+          onCollisionEnter={(collider) => {
+            console.log("plane collided with", collider);
+          }}
+        />
+      </group>
     </>
   );
 };

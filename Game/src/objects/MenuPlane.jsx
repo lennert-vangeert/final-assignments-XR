@@ -72,13 +72,22 @@ const MenuPlane = () => {
 
   useEffect(() => {
     if (planeRef.current) {
-      const targetPosition =
-        menuPhase === "leaderboards" ? [-201, 113, 265] : [-198, 113, 265];
-      const targetRotation =
-        menuPhase === "leaderboards"
-          ? [0, Math.PI * 0.8, 0]
-          : [0, Math.PI * 0.65, Math.PI * -0.05];
+      let targetPosition;
+      let targetRotation;
 
+      if (menuPhase === "leaderboards" || menuPhase === "credits") {
+        targetPosition = [-201, 113, 265];
+        targetRotation = [0, Math.PI * 0.8, 0];
+      } else if (menuPhase === "settings") {
+        targetPosition = [-198, 113, 265]; // Adjusted position for "settings"
+        targetRotation = [0, Math.PI * -0.3, Math.PI * -0.1]; // Adjusted rotation for "settings"
+      } else {
+        // Default to "main" menu phase
+        targetPosition = [-198, 113, 265];
+        targetRotation = [0, Math.PI * 0.65, Math.PI * -0.05];
+      }
+
+      // GSAP animations for position and rotation transitions
       gsap.to(planeRef.current.position, {
         x: targetPosition[0],
         y: targetPosition[1],

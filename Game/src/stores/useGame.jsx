@@ -8,6 +8,7 @@ export default create(
       playTime: 0,
       startTime: 0,
       endTime: 0,
+      isMusicOn: false,
 
       /**
        * Phases
@@ -59,11 +60,25 @@ export default create(
       menuLeaderboards: () => {
         set({ menuPhase: "leaderboards" });
       },
+      menuCredits: () => {
+        set({ menuPhase: "credits" });
+      },
       // username
       userName: "Player",
       setUserName: (name) => {
         console.log("setUserName", name);
         set({ userName: name });
+      },
+
+      //audio
+
+      setMusicOn: () => {
+        set({ isMusicOn: true });
+        console.log("setMusicOn");
+      },
+      setMusicOff: () => {
+        set({ isMusicOn: false });
+        console.log("setMusicOff");
       },
     };
   })
