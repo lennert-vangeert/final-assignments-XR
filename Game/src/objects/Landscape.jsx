@@ -7,6 +7,7 @@ import { updatePlaneAxis } from "../flightControls";
 const Landscape = () => {
   const end = useGame((state) => state.end);
   const phase = useGame((state) => state.phase);
+  const failed = useGame((state) => state.failed);
 
   const landscape = useGLTF("./models/landscape/landscape.gltf");
   useEffect(() => {
@@ -20,7 +21,7 @@ const Landscape = () => {
 
   const onCollission = () => {
     if (phase === "playing") {
-      end();
+      failed();
     }
     updatePlaneAxis(reset=== true);
   };

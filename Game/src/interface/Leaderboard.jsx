@@ -7,7 +7,7 @@ const Leaderboard = () => {
   const localUrl = "http://localhost:5000/leaderboard";
 
   useEffect(() => {
-    fetch(localUrl)
+    fetch(`${import.meta.env.VITE_API_URL}/leaderboard`)
       .then((res) => res.json())
       .then((data) => {
         setLeaderBoard(data);
@@ -15,7 +15,7 @@ const Leaderboard = () => {
   }, []);
 
   if (leaderBoard.length === 0) {
-    return <div className="right_container">Loading... (api spinning up)</div>;
+    return <div className="right_container">Loading...</div>;
   } else
     return (
       <div className="right_container">

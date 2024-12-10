@@ -5,6 +5,7 @@ import Leaderboard from "./Leaderboard";
 import SoundOn from "../icons/SoundOn";
 import SoundOff from "../icons/SoundOff";
 import Credits from "./Credits";
+import EndScore from "./endScore";
 
 const Interface = () => {
   const time = useRef();
@@ -20,6 +21,7 @@ const Interface = () => {
   const setUserName = useGame((state) => state.setUserName);
   const userName = useGame((state) => state.userName);
   const isMusicOn = useGame((state) => state.isMusicOn);
+  const score = useGame((state) => state.score);
   const menuAudioRef = useRef(null);
 
   const onchange = (e) => {
@@ -47,10 +49,8 @@ const Interface = () => {
     const menuAudio = menuAudioRef.current;
 
     if (isMusicOn) {
-      console.log("play");
       menuAudio.play();
     } else {
-      console.log("pause");
       menuAudio.pause();
     }
 
@@ -157,13 +157,16 @@ const Interface = () => {
       {/* Time */}
 
       {phase === "playing" && (
-        <div className="time" ref={time}>
-          0.00
+        <div>
+          <div className="time" ref={time}>
+            0.00
+          </div>
+          <div className="score">Score: {score}</div>
         </div>
       )}
 
       {/* Restart */}
-      {phase === "ended" && (
+      {phase === "failed" && (
         <div className="button_container">
           <div className="main_button" onClick={restart}>
             Restart
@@ -173,6 +176,7 @@ const Interface = () => {
           </div>
         </div>
       )}
+      {phase === "ended" && <EndScore time={time.current.textContent} />}
     </main>
   );
 };

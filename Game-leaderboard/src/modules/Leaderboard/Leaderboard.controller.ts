@@ -9,7 +9,7 @@ const getLeaderboard = async (
 ) => {
   try {
     // limited to 10
-    const leaderboard = await Leaderboard.find().sort({ score: -1 }).limit(10);
+    const leaderboard = await Leaderboard.find().sort({ score: 1 }).limit(10);
     res.json(leaderboard);
   } catch (err) {
     next(err);

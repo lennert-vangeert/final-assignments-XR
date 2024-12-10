@@ -1,6 +1,6 @@
+import { useFrame } from "@react-three/fiber";
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
-import { updatePlaneAxis } from "../flightControls";
 
 export default create(
   subscribeWithSelector((set) => {
@@ -10,6 +10,21 @@ export default create(
       startTime: 0,
       endTime: 0,
       isMusicOn: false,
+      score: 0,
+      ringLocations: [
+        // x, y, z, rotY
+        [4, -17, -68, 0],
+        [-45, -22, -185, -1.82],
+        [-105, 82, -320, 0],
+        [0, -7, -477, -1.7],
+        [0, -15, -527, -2.11],
+        [328, 24, -175, 0],
+        [186, -50, -504, 1],
+        [186, -26, -200, 1.7],
+        [-202, 7, -214, 1.29],
+        [-316, -42, -311, 0.17],
+        // todo add 10 more
+      ],
 
       /**
        * Phases
@@ -20,7 +35,7 @@ export default create(
         console.log("start");
         set((state) => {
           if (state.phase === "ready") {
-            return { phase: "playing", startTime: Date.now() };
+            return { phase: "playing", startTime: Date.now(), score: 0 };
           }
 
           return {};
@@ -52,6 +67,9 @@ export default create(
       ready: () => {
         set({ phase: "ready", menuPhase: "main" });
       },
+      failed: () => {
+        set({ phase: "failed" });
+      },
       // menu phase
       menuPhase: "main",
 
@@ -70,7 +88,6 @@ export default create(
       // username
       userName: "Player",
       setUserName: (name) => {
-        console.log("setUserName", name);
         set({ userName: name });
       },
 
@@ -83,6 +100,13 @@ export default create(
       setMusicOff: () => {
         set({ isMusicOn: false });
         console.log("setMusicOff");
+      },
+
+      // score
+      addScore: () => {
+        set((state) => {
+          return { score: state.score + 1 };
+        });
       },
     };
   })

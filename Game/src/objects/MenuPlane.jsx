@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useGLTF, useAnimations } from "@react-three/drei";
+import { useGLTF, useAnimations, OrbitControls } from "@react-three/drei";
 import { AnimationClip } from "three";
 import { useFrame } from "@react-three/fiber";
 import gsap from "gsap";
@@ -10,6 +10,7 @@ const MenuPlane = () => {
   const pilot = useGLTF("./models/pilot/pilot.gltf");
   const smoke = useGLTF("./models/smoke/scene.gltf");
   const menuPhase = useGame((state) => state.menuPhase);
+  const phase = useGame((state) => state.phase);
 
   const planeRef = useRef();
 
@@ -56,7 +57,7 @@ const MenuPlane = () => {
   const bobbingHeight = 0.2;
   const rotationSpeed = 0.1;
 
-  useFrame(({ clock }) => {
+  useFrame(({ clock, camera }) => {
     if (planeRef.current) {
       const elapsedTime = clock.getElapsedTime();
 
@@ -68,6 +69,9 @@ const MenuPlane = () => {
       planeRef.current.rotation.x =
         Math.cos(elapsedTime * rotationSpeed) * 0.02;
     }
+    // set camera position
+    camera.position.set(-203, 115.5, 271);
+    camera.lookAt(-198, 113, 265);
   });
 
   useEffect(() => {
@@ -113,6 +117,7 @@ const MenuPlane = () => {
       rotation={[0, Math.PI * 0.65, Math.PI * -0.05]}
       position={[-198, 113, 265]}
     >
+      {/* <OrbitControls makeDefault /> */}
       <primitive
         object={plane.scene}
         scale={1}

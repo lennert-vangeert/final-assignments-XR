@@ -11,12 +11,15 @@ import DayNightCycle from "./hooks/DayNightCycle"; // Import the DayNightCycle c
 import { useFrame } from "@react-three/fiber";
 import MenuPlane from "./objects/MenuPlane";
 import useGame from "./stores/useGame";
+import RingTwo from "./objects/RingTwo";
+
 export default function Experience() {
+  const ringLocations = useGame((state) => state.ringLocations);
   const phase = useGame((state) => state.phase);
   return (
     <>
       {/* <Perf position="top-left" /> */}
-      {/* <OrbitControls makeDefault /> */}
+      <OrbitControls makeDefault />
 
       {/* Day-Night Cycle Component */}
       {/* <DayNightCycle /> */}
@@ -32,7 +35,15 @@ export default function Experience() {
           <>
             <Plane />
             <Jerrycan />
-            <Ring diameter={5} position={[5, 10, -7]} />
+            {/* <RingTwo diameter={5} position={[5, 10, -7]} /> */}
+            {ringLocations.map(([x, y, z, rotY], index) => (
+              <Ring
+                key={index}
+                position={[x, y, z]}
+                rotY={[0, rotY, 0]}
+                diameter={Math.random() * (5 - 3) + 3}
+              />
+            ))}
             <Landscape />
             <Lake />
             {/* <RigidBody

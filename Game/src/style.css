@@ -231,3 +231,20 @@ body,
 .list_item a:hover {
   color: var(--color-secondary);
 }
+
+.score {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 3rem;
+  font-size: 3rem;
+  color: var(--color-primary);
+}
+.subtitle {
+  padding: 0rem 2rem;
+  color: var(--color-primary);
+  font-size: 2rem;
+  pointer-events: auto;
+  transition: 0.15s ease-in-out all;
+  text-align: center;
+}

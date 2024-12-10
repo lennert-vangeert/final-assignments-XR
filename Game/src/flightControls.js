@@ -21,7 +21,6 @@ let counter = 0;
 export let turbo = 0;
 
 export function updatePlaneAxis(x, y, z, planePosition, camera, reset) {
-  console.log(counter);
   if (reset) {
     console.log("reset");
     counter = 0;
