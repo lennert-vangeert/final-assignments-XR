@@ -1,3 +1,5 @@
+import useGame from "./stores/useGame";
+
 function easeOutQuad(x) {
   return 1 - (1 - x) * (1 - x);
 }
@@ -15,9 +17,25 @@ let maxVelocity = 0.02; // Reduced max velocity for slower turns
 let jawVelocity = 0;
 let pitchVelocity = 0;
 let planeSpeed = 0.2;
+let counter = 0;
 export let turbo = 0;
 
-export function updatePlaneAxis(x, y, z, planePosition, camera) {
+export function updatePlaneAxis(x, y, z, planePosition, camera, reset) {
+  console.log(counter);
+  if (reset) {
+    console.log("reset");
+    counter = 0;
+  }
+  if (counter === 0) {
+    counter++;
+    jawVelocity = 0;
+    pitchVelocity = 0;
+    turbo = 0;
+    x.set(1, 0, 0);
+    y.set(0, 1, 0);
+    z.set(0, 0, 1);
+    planePosition.set(0, 3, 7);
+  }
   // Increase damping for smoother and slower turns
   jawVelocity *= 0.98;
   pitchVelocity *= 0.98;
@@ -41,7 +59,7 @@ export function updatePlaneAxis(x, y, z, planePosition, camera) {
     pitchVelocity -= 0.001; // Slower pitch up
   }
 
-  if (controls["s"] ) {
+  if (controls["s"]) {
     pitchVelocity += 0.001; // Slower pitch down
   }
 

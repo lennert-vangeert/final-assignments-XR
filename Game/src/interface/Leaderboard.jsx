@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 const Leaderboard = () => {
   const [leaderBoard, setLeaderBoard] = useState([]);
   //   env
-  const url = import.meta.env.API_URL;
+  const liveUrl = "https://whiskerwingsleaderboard.onrender.com/leaderboard";
+  const localUrl = "http://localhost:5000/leaderboard";
 
-  //   https://whiskerwingsleaderboard.onrender.com/leaderboard
   useEffect(() => {
-    fetch("https://whiskerwingsleaderboard.onrender.com/leaderboard")
+    fetch(localUrl)
       .then((res) => res.json())
       .then((data) => {
         setLeaderBoard(data);

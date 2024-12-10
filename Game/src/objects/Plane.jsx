@@ -149,9 +149,6 @@ const Plane = () => {
         <CuboidCollider
           ref={colliderRef}
           args={[5.5, 2, 5.5]}
-          onCollisionEnter={(collider) => {
-            console.log("plane collided with", collider);
-          }}
         />
       </group>
     </>

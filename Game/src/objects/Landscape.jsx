@@ -1,33 +1,46 @@
-  import React, { useEffect } from "react";
-  import { useGLTF } from "@react-three/drei";
-  import {RigidBody } from "@react-three/rapier";
+import React, { useEffect } from "react";
+import { useGLTF } from "@react-three/drei";
+import { RigidBody } from "@react-three/rapier";
+import useGame from "../stores/useGame";
+import { updatePlaneAxis } from "../flightControls";
 
-  const Landscape = () => {
-    const landscape = useGLTF("./models/landscape/landscape.gltf");
-    useEffect(() => {
-      landscape.scene.traverse((child) => {
-        if (child.isMesh) {
-          child.castShadow = true;
-          child.receiveShadow = true;
-        }
-      });
-    }, []);
+const Landscape = () => {
+  const end = useGame((state) => state.end);
+  const phase = useGame((state) => state.phase);
 
-    const onCollission = () => {
-      console.log("plane crashed");
+  const landscape = useGLTF("./models/landscape/landscape.gltf");
+  useEffect(() => {
+    landscape.scene.traverse((child) => {
+      if (child.isMesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
+  }, []);
+
+  const onCollission = () => {
+    if (phase === "playing") {
+      end();
     }
-
-    return (
-      <>
-        <RigidBody onCollisionEnter={onCollission} type="fixed" colliders="trimesh">
-          <primitive
-            object={landscape.scene}
-            scale={100}
-            position={[0, -80, -250]}
-          />
-        </RigidBody>
-      </>
-    );
+    updatePlaneAxis(reset=== true);
   };
 
-  export default Landscape;
+  return (
+    <>
+      <RigidBody
+        onCollisionEnter={onCollission}
+        type="dynamic"
+        colliders="trimesh"
+        gravityScale={0}
+      >
+        <primitive
+          object={landscape.scene}
+          scale={100}
+          position={[0, -80, -250]}
+        />
+      </RigidBody>
+    </>
+  );
+};
+
+export default Landscape;

@@ -10,6 +10,7 @@ const Interface = () => {
   const time = useRef();
   const restart = useGame((state) => state.restart);
   const start = useGame((state) => state.start);
+  const ready = useGame((state) => state.ready);
   const phase = useGame((state) => state.phase);
   const menuPhase = useGame((state) => state.menuPhase);
   const menuMain = useGame((state) => state.menuMain);
@@ -150,7 +151,7 @@ const Interface = () => {
               back
             </div>
           </div>
-            <Credits />
+          <Credits />
         </>
       )}
       {/* Time */}
@@ -163,8 +164,13 @@ const Interface = () => {
 
       {/* Restart */}
       {phase === "ended" && (
-        <div className="restart" onClick={restart}>
-          Restart
+        <div className="button_container">
+          <div className="main_button" onClick={restart}>
+            Restart
+          </div>
+          <div className="main_button" onClick={ready}>
+            Main menu
+          </div>
         </div>
       )}
     </main>

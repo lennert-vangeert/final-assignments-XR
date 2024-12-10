@@ -4,6 +4,7 @@ import * as THREE from "three";
 
 import { Water } from "three/examples/jsm/objects/Water.js";
 import { useControls } from "leva";
+import { RigidBody } from "@react-three/rapier";
 
 extend({ Water });
 
@@ -36,12 +37,14 @@ function Lake() {
     (state, delta) => (ref.current.material.uniforms.time.value += delta / 10)
   );
   return (
-    <water
-      ref={ref}
-      args={[geom, config]}
-      rotation-x={-Math.PI / 2}
-      position={[-96, -48, -210]}
-    />
+    // <RigidBody type="kinematicPosition">
+      <water
+        ref={ref}
+        args={[geom, config]}
+        rotation-x={-Math.PI / 2}
+        position={[-96, -48, -210]}
+      />
+    // </RigidBody>
   );
 }
 

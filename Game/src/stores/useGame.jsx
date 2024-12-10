@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
+import { updatePlaneAxis } from "../flightControls";
 
 export default create(
   subscribeWithSelector((set) => {
@@ -47,6 +48,9 @@ export default create(
           }
           return {};
         });
+      },
+      ready: () => {
+        set({ phase: "ready", menuPhase: "main" });
       },
       // menu phase
       menuPhase: "main",
