@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import useGame from "../stores/useGame";
 
-const EndScore = ({ time = 0 }) => {
+const EndTime = ({ time = 0 }) => {
   const ready = useGame((state) => state.ready);
   //   console.log(process.env.VITE_API_KEY);
 
@@ -33,4 +33,4 @@ const EndScore = ({ time = 0 }) => {
   );
 };
 
-export default EndScore;
+export default EndTime;

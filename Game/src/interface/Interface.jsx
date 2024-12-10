@@ -5,7 +5,7 @@ import Leaderboard from "./Leaderboard";
 import SoundOn from "../icons/SoundOn";
 import SoundOff from "../icons/SoundOff";
 import Credits from "./Credits";
-import EndScore from "./endScore";
+import EndTime from "./EndTime";
 
 const Interface = () => {
   const time = useRef();
@@ -176,7 +176,7 @@ const Interface = () => {
           </div>
         </div>
       )}
-      {phase === "ended" && <EndScore time={time.current.textContent} />}
+      {phase === "ended" && <EndTime time={time.current.textContent} />}
     </main>
   );
 };
