@@ -23,7 +23,7 @@ const Landscape = () => {
     if (phase === "playing") {
       failed();
     }
-    updatePlaneAxis(reset=== true);
+    updatePlaneAxis(reset === true);
   };
 
   return (

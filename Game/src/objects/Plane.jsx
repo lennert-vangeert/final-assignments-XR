@@ -4,6 +4,7 @@ import { CuboidCollider } from "@react-three/rapier";
 import { AnimationClip, Matrix4, Quaternion, Vector3 } from "three";
 import { updatePlaneAxis } from "../flightControls";
 import { useFrame } from "@react-three/fiber";
+import useGame from "../stores/useGame";
 
 const x = new Vector3(1, 0, 0);
 const y = new Vector3(0, 1, 0);
@@ -16,6 +17,7 @@ const Plane = () => {
   const plane = useGLTF("./models/plane/scene.gltf");
   const pilot = useGLTF("./models/pilot/pilot.gltf");
   const smoke = useGLTF("./models/smoke/scene.gltf");
+  const crashed = useGame((state) => state.crashed);
 
   const groupRef = useRef();
   const helixMeshRef = useRef();
@@ -39,7 +41,7 @@ const Plane = () => {
   }, [animationspeed]);
 
   useFrame(({ camera }) => {
-    updatePlaneAxis(x, y, z, planePosition, camera);
+    updatePlaneAxis(x, y, z, planePosition, camera, crashed);
 
     const rotMatrix = new Matrix4().makeBasis(x, y, z);
 

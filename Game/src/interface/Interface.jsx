@@ -168,9 +168,7 @@ const Interface = () => {
       {/* Restart */}
       {phase === "failed" && (
         <div className="button_container">
-          <div className="main_button" onClick={restart}>
-            Restart
-          </div>
+          <h1 className="title">You crashed :/</h1>
           <div className="main_button" onClick={ready}>
             Main menu
           </div>

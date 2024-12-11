@@ -23,17 +23,6 @@ export let turbo = 0;
 export function updatePlaneAxis(x, y, z, planePosition, camera, reset) {
   if (reset) {
     console.log("reset");
-    counter = 0;
-  }
-  if (counter === 0) {
-    counter++;
-    jawVelocity = 0;
-    pitchVelocity = 0;
-    turbo = 0;
-    x.set(1, 0, 0);
-    y.set(0, 1, 0);
-    z.set(0, 0, 1);
-    planePosition.set(0, 3, 7);
   }
   // Increase damping for smoother and slower turns
   jawVelocity *= 0.98;
@@ -62,7 +51,7 @@ export function updatePlaneAxis(x, y, z, planePosition, camera, reset) {
     pitchVelocity += 0.001; // Slower pitch down
   }
 
-  if (controls["r"]) {
+  if (controls["r"] || reset) {
     jawVelocity = 0;
     pitchVelocity = 0;
     turbo = 0;

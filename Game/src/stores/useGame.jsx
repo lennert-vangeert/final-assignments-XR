@@ -11,6 +11,7 @@ export default create(
       endTime: 0,
       isMusicOn: false,
       score: 0,
+      crashed: false,
       ringLocations: [
         // x, y, z, rotY
         [4, -17, -68, 0],
@@ -65,10 +66,14 @@ export default create(
         });
       },
       ready: () => {
-        set({ phase: "ready", menuPhase: "main" });
+        set({ phase: "ready", menuPhase: "main", crashed: false });
       },
       failed: () => {
-        set({ phase: "failed" });
+        setTimeout(() => {
+          set({ phase: "failed" });
+        }, 10);
+        set({ crashed: true });
+        
       },
       // menu phase
       menuPhase: "main",
