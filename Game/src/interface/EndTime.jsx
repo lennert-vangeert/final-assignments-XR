@@ -7,6 +7,14 @@ const EndTime = ({ time = 0 }) => {
 
   // post score to server
   useEffect(() => {
+    console.log("posting to leaderboard");
+    console.log(import.meta.env.VITE_API_URL);
+    console.log(
+      JSON.stringify({
+        userName: localStorage.getItem("userName"),
+        score: time,
+      })
+    );
     fetch(`${import.meta.env.VITE_API_URL}/createscore`, {
       method: "POST",
       headers: {
