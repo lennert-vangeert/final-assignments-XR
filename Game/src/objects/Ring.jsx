@@ -50,7 +50,7 @@ const Ring = ({ diameter, position, rotY }) => {
   })();
 
   useEffect(() => {
-    if (score === 10) {
+    if (score === 1) {
       end();
     }
   }, [score]);
