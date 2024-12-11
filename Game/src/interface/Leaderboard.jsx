@@ -10,7 +10,10 @@ const Leaderboard = () => {
     fetch(`${import.meta.env.VITE_API_URL}/leaderboard`)
       .then((res) => res.json())
       .then((data) => {
-        setLeaderBoard(data);
+        const sortedData = data
+          .filter((item) => !isNaN(parseFloat(item.score))) // Remove invalid scores
+          .sort((a, b) => parseFloat(a.score) - parseFloat(b.score)); // Sort by score (ascending)
+        setLeaderBoard(sortedData);
       });
   }, []);
 
