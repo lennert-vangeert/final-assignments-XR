@@ -1,4 +1,3 @@
-import useGame from "./stores/useGame";
 
 function easeOutQuad(x) {
   return 1 - (1 - x) * (1 - x);
@@ -13,9 +12,10 @@ window.addEventListener("keyup", (e) => {
   controls[e.key.toLowerCase()] = false;
 });
 
-let maxVelocity = 0.02; // Reduced max velocity for slower turns
+let maxVelocity = 0.02;
 let jawVelocity = 0;
 let pitchVelocity = 0;
+let yawVelocity = 0;
 let planeSpeed = 0.2;
 let counter = 0;
 export let turbo = 0;
@@ -24,9 +24,10 @@ export function updatePlaneAxis(x, y, z, planePosition, camera, reset) {
   if (reset) {
     console.log("reset");
   }
-  // Increase damping for smoother and slower turns
+
   jawVelocity *= 0.98;
   pitchVelocity *= 0.98;
+  yawVelocity *= 0.98;
 
   if (Math.abs(jawVelocity) > maxVelocity)
     jawVelocity = Math.sign(jawVelocity) * maxVelocity;
@@ -34,26 +35,37 @@ export function updatePlaneAxis(x, y, z, planePosition, camera, reset) {
   if (Math.abs(pitchVelocity) > maxVelocity)
     pitchVelocity = Math.sign(pitchVelocity) * maxVelocity;
 
-  // Reduced velocity increment for slower rotation
+  if (Math.abs(yawVelocity) > maxVelocity)
+    yawVelocity = Math.sign(yawVelocity) * maxVelocity;
+
   if (controls["a"] || controls["q"]) {
-    jawVelocity += 0.001; // Slower turn left
+    jawVelocity += 0.001;
   }
 
   if (controls["d"]) {
-    jawVelocity -= 0.001; // Slower turn right
+    jawVelocity -= 0.001;
   }
 
   if (controls["w"] || controls["z"]) {
-    pitchVelocity -= 0.001; // Slower pitch up
+    pitchVelocity -= 0.001;
   }
 
   if (controls["s"]) {
-    pitchVelocity += 0.001; // Slower pitch down
+    pitchVelocity += 0.001;
+  }
+
+  if (controls["arrowleft"]) {
+    yawVelocity += 0.001;
+  }
+
+  if (controls["arrowright"]) {
+    yawVelocity -= 0.001;
   }
 
   if (controls["r"] || reset) {
     jawVelocity = 0;
     pitchVelocity = 0;
+    yawVelocity = 0;
     turbo = 0;
     x.set(1, 0, 0);
     y.set(0, 1, 0);
@@ -61,18 +73,19 @@ export function updatePlaneAxis(x, y, z, planePosition, camera, reset) {
     planePosition.set(0, 3, 7);
   }
 
-  // Apply rotation based on the velocities
   x.applyAxisAngle(z, jawVelocity);
   y.applyAxisAngle(z, jawVelocity);
 
   y.applyAxisAngle(x, pitchVelocity);
   z.applyAxisAngle(x, pitchVelocity);
 
+  x.applyAxisAngle(y, yawVelocity);
+  z.applyAxisAngle(y, yawVelocity);
+
   x.normalize();
   y.normalize();
   z.normalize();
 
-  // plane position & velocity (turbo commented out)
   if (controls.shift) {
     turbo += 0.025;
   } else {
