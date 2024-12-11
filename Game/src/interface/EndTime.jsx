@@ -4,7 +4,9 @@ import useGame from "../stores/useGame";
 const EndTime = ({ time = 0 }) => {
   const ready = useGame((state) => state.ready);
   //   console.log(process.env.VITE_API_KEY);
-
+  if (!localStorage.getItem("userName")) {
+    localStorage.setItem("userName", "Player");
+  }
   // post score to server
   useEffect(() => {
     console.log("posting to leaderboard");
