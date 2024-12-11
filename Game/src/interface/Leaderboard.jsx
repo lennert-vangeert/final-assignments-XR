@@ -2,17 +2,15 @@ import React, { useEffect, useState } from "react";
 
 const Leaderboard = () => {
   const [leaderBoard, setLeaderBoard] = useState([]);
-  //   env
-  const liveUrl = "https://whiskerwingsleaderboard.onrender.com/leaderboard";
-  const localUrl = "http://localhost:5000/leaderboard";
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/leaderboard`)
       .then((res) => res.json())
       .then((data) => {
         const sortedData = data
-          .filter((item) => !isNaN(parseFloat(item.score))) // Remove invalid scores
-          .sort((a, b) => parseFloat(a.score) - parseFloat(b.score)); // Sort by score (ascending)
+          .filter((item) => !isNaN(parseFloat(item.score)))
+          .sort((a, b) => parseFloat(a.score) - parseFloat(b.score))
+          .slice(0, 10);
         setLeaderBoard(sortedData);
       });
   }, []);

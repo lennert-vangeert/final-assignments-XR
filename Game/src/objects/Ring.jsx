@@ -41,7 +41,6 @@ const Ring = ({ diameter, position, rotY }) => {
     return (e) => {
 
       if (!hasCollided) {
-        console.log("Collision detected:", e);
         addScore();
         setIsVisible(false);
         hasCollided = true;
@@ -50,7 +49,7 @@ const Ring = ({ diameter, position, rotY }) => {
   })();
 
   useEffect(() => {
-    if (score === 1) {
+    if (score === 10) {
       end();
     }
   }, [score]);
