@@ -5,7 +5,6 @@ const EndTime = ({ time = 0 }) => {
   const ready = useGame((state) => state.ready);
   //   console.log(process.env.VITE_API_KEY);
 
-  console.log();
   // post score to server
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/createscore`, {

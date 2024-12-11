@@ -73,7 +73,6 @@ export default create(
           set({ phase: "failed" });
         }, 10);
         set({ crashed: true });
-        
       },
       // menu phase
       menuPhase: "main",
