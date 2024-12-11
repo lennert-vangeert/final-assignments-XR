@@ -46,11 +46,11 @@ export function updatePlaneAxis(x, y, z, planePosition, camera, reset) {
     jawVelocity -= 0.001;
   }
 
-  if (controls["w"] || controls["z"]) {
+  if (controls["w"] || controls["z"] || controls["arrowup"]) {
     pitchVelocity -= 0.001;
   }
 
-  if (controls["s"]) {
+  if (controls["s"] || controls["arrowdown"]) {
     pitchVelocity += 0.001;
   }
 
