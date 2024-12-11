@@ -1,6 +1,3 @@
 game:
-- reset position
-- rigidbody
-- rings
-- post to leaderboard
+- reset position after finish
   

@@ -19,7 +19,7 @@ export default function Experience() {
   return (
     <>
       {/* <Perf position="top-left" /> */}
-      <OrbitControls makeDefault />
+      {/* <OrbitControls makeDefault /> */}
 
       {/* Day-Night Cycle Component */}
       {/* <DayNightCycle /> */}
