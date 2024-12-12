@@ -23,10 +23,19 @@ const Credits = () => {
           (http://creativecommons.org/licenses/by/4.0/).
         </li>
         <li className="list_item">
-        Song: Dosi & Aisake - Cruising [NCS Release]
-Music provided by NoCopyrightSounds
-Free Download/Stream: http://ncs.io/Cruising
-Watch: http://ncs.lnk.to/CruisingAT/youtube
+          Song: Dosi & Aisake - Cruising [NCS Release] Music provided by
+          NoCopyrightSounds Free Download/Stream: http://ncs.io/Cruising Watch:
+          http://ncs.lnk.to/CruisingAT/youtube
+        </li>
+        <li className="list_item">
+          Sound Effect by{" "}
+          <a href="https://pixabay.com/users/blendertimer-9538909/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=13849">
+            Daniel Roberts
+          </a>{" "}
+          from{" "}
+          <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=13849">
+            Pixabay
+          </a>
         </li>
       </ul>
     </div>

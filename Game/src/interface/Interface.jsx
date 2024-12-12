@@ -203,14 +203,14 @@ const Interface = () => {
       {/* Time */}
 
       {phase === "playing" && (
-        <div>
+        <>
           <div className="time" ref={time}>
             0.00
           </div>
           <div className="score">
             Score: {score}/{ringLocations.length}
           </div>
-        </div>
+        </>
       )}
 
       {/* Restart */}

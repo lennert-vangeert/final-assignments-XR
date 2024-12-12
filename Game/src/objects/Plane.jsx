@@ -18,6 +18,32 @@ const Plane = () => {
   const pilot = useGLTF("./models/pilot/pilot.gltf");
   const smoke = useGLTF("./models/smoke/scene.gltf");
   const crashed = useGame((state) => state.crashed);
+  const isMusicOn = useGame((state) => state.isMusicOn);
+  const audioRef = useRef();
+
+  useEffect(() => {
+    // Create the Audio object only once
+    if (!audioRef.current) {
+      const audio = new Audio("/audio/plane.mp3");
+      audio.loop = true;
+      audio.volume = 0.5;
+      audioRef.current = audio;
+    }
+
+    const audio = audioRef.current;
+
+    if (isMusicOn) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+
+    // Cleanup on component unmount (optional)
+    return () => {
+      audio.pause();
+      audio.currentTime = 0; // Reset playback position
+    };
+  }, [isMusicOn]);
 
   const groupRef = useRef();
   const helixMeshRef = useRef();
@@ -148,10 +174,7 @@ const Plane = () => {
           position={[0, 4, -2]}
         />
         {/* Attach collider to plane */}
-        <CuboidCollider
-          ref={colliderRef}
-          args={[7.5, 2, 7.5]}
-        />
+        <CuboidCollider ref={colliderRef} args={[7.5, 2, 7.5]} />
       </group>
     </>
   );

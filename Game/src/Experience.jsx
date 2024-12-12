@@ -26,15 +26,23 @@ export default function Experience() {
       <ambientLight intensity={2} />
       <directionalLight
         castShadow
-        position={[100, 10, 100]}
+        position={[100, 100, 100]}
         intensity={2}
         color={"#FFA500"} // Orange whiteish sun color
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+        shadow-camera-far={5000}
+        shadow-camera-left={-1000}
+        shadow-camera-right={1000}
+        shadow-camera-top={1000}
+        shadow-camera-bottom={-1000}
+
       />
       <Physics gravity={[0, -9.81, 0]}>
         {phase === "playing" && (
           <>
             <Plane />
-            <Jerrycan />
+            {/* <Jerrycan /> */}
             {/* <RingTwo diameter={5} position={[5, 10, -7]} /> */}
             {ringLocations.map(([x, y, z, rotY], index) => (
               <Ring
