@@ -9,7 +9,7 @@ export default create(
       playTime: 0,
       startTime: 0,
       endTime: 0,
-      isMusicOn: false,
+      isMusicOn: localStorage.getItem("isMusicOn") || false,
       score: 0,
       crashed: false,
       ringLocations: [
@@ -103,10 +103,12 @@ export default create(
       setMusicOn: () => {
         set({ isMusicOn: true });
         console.log("setMusicOn");
+        localStorage.setItem("isMusicOn", true);
       },
       setMusicOff: () => {
         set({ isMusicOn: false });
         console.log("setMusicOff");
+        localStorage.setItem("isMusicOn", false);
       },
 
       // score
