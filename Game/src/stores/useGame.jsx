@@ -14,7 +14,7 @@ export default create(
       crashed: false,
       ringLocations: [
         // x, y, z, rotY
-        [4, -17, -68, 0],
+        [4, -10, -68, 0],
         [-45, -22, -185, -1.82],
         [-105, 82, -320, 0],
         [0, -7, -477, -1.7],
