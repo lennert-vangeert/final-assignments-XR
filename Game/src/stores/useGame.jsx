@@ -24,7 +24,6 @@ export default create(
         [186, -26, -200, 1.7],
         [-202, 7, -214, 1.29],
         [-316, -42, -311, 0.17],
-        // todo add 10 more
       ],
 
       /**
@@ -53,17 +52,19 @@ export default create(
         });
       },
       end: () => {
-        console.log("end");
-        set((state) => {
-          if (state.phase === "playing") {
-            return {
-              phase: "ended",
-              endTime: Date.now(),
-              playTime: state.endTime - state.startTime,
-            };
-          }
-          return {};
-        });
+        set({ crashed: true });
+        setTimeout(() => {
+          set((state) => {
+            if (state.phase === "playing") {
+              return {
+                phase: "ended",
+                endTime: Date.now(),
+                playTime: state.endTime - state.startTime,
+              };
+            }
+            return {};
+          });
+        }, 10);
       },
       ready: () => {
         set({ phase: "ready", menuPhase: "main", crashed: false });

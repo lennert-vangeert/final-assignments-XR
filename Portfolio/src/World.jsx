@@ -43,7 +43,7 @@ export default function World({camera}) {
           <Lake />
           <Windmill />
         </group>
-        <UseThirdPerson isInVehicle={true} />
+        <UseThirdPerson isInVehicle={false} />
         {/* <Car />  */}
       </Physics>
     </>
