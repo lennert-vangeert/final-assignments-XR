@@ -1,7 +1,6 @@
 import { RigidBody } from "@react-three/rapier";
 import React, { useEffect, useState } from "react";
 import useGame from "../stores/useGame";
-import { useControls } from "leva";
 
 const Ring = ({ diameter, position, rotY }) => {
   const [isVisible, setIsVisible] = useState(true);
@@ -9,6 +8,17 @@ const Ring = ({ diameter, position, rotY }) => {
   const score = useGame((state) => state.score);
   const end = useGame((state) => state.end);
   const ringLocations = useGame((state) => state.ringLocations);
+  const isMusicOn = useGame((state) => state.isMusicOn);
+  const audio = new Audio("/audio/collect.mp3");
+
+
+  const playAudio = () => {
+    if (!isMusicOn) return;
+    audio.pause();
+    audio.currentTime = 0;
+    audio.volume = 0.5;
+    audio.play();
+  };
 
   // const { positionX, positionY, positionZ, rotationY } = useControls({
   //   positionX: {
@@ -40,11 +50,11 @@ const Ring = ({ diameter, position, rotY }) => {
   const onCollission = (() => {
     let hasCollided = false;
     return (e) => {
-
       if (!hasCollided) {
         addScore();
         setIsVisible(false);
         hasCollided = true;
+        playAudio();
       }
     };
   })();

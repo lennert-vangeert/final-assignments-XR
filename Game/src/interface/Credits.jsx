@@ -28,12 +28,17 @@ const Credits = () => {
           http://ncs.lnk.to/CruisingAT/youtube
         </li>
         <li className="list_item">
-          Sound Effect by{" "}
+          Sound Effects by{" "}
+          <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=6075">
+            freesound_community
+          </a>
+          {" and "}
           <a href="https://pixabay.com/users/blendertimer-9538909/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=13849">
             Daniel Roberts
-          </a>{" "}
-          from{" "}
-          <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=13849">
+          </a>
+          {" "}
+          all from{" "}
+          <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=6075">
             Pixabay
           </a>
         </li>

@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import { useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
 import useGame from "../stores/useGame";
-import { updatePlaneAxis } from "../flightControls";
 
 const Landscape = () => {
-  const end = useGame((state) => state.end);
   const phase = useGame((state) => state.phase);
   const failed = useGame((state) => state.failed);
+  const isMusicOn = useGame((state) => state.isMusicOn);
+
+  const collissionSound = new Audio("/audio/hit.mp3");
 
   const landscape = useGLTF("./models/landscape/landscape.gltf");
   useEffect(() => {
@@ -23,7 +24,12 @@ const Landscape = () => {
     if (phase === "playing") {
       failed();
     }
-    updatePlaneAxis(reset === true);
+    if (isMusicOn) {
+      collissionSound.pause();
+      collissionSound.currentTime = 0;
+      collissionSound.volume = 0.3;
+      collissionSound.play();
+    }
   };
 
   return (
