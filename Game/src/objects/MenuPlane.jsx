@@ -79,7 +79,7 @@ const MenuPlane = () => {
       let targetPosition;
       let targetRotation;
 
-      if (menuPhase === "leaderboards" || menuPhase === "credits") {
+      if (menuPhase === "leaderboards" || menuPhase === "credits" || menuPhase === "controls") {
         targetPosition = [-201, 113, 265];
         targetRotation = [0, Math.PI * 0.8, 0];
       } else if (menuPhase === "settings") {
