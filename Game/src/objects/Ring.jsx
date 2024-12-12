@@ -8,6 +8,7 @@ const Ring = ({ diameter, position, rotY }) => {
   const addScore = useGame((state) => state.addScore);
   const score = useGame((state) => state.score);
   const end = useGame((state) => state.end);
+  const ringLocations = useGame((state) => state.ringLocations);
 
   // const { positionX, positionY, positionZ, rotationY } = useControls({
   //   positionX: {
@@ -49,7 +50,7 @@ const Ring = ({ diameter, position, rotY }) => {
   })();
 
   useEffect(() => {
-    if (score === 10) {
+    if (score === ringLocations.length) {
       end();
     }
   }, [score]);

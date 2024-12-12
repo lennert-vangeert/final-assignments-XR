@@ -197,7 +197,17 @@ body,
   position: absolute;
   top: 0;
   right: 0;
-  padding: 1rem;
+  padding: 3rem;
+  font-size: 2rem;
+  color: var(--color-primary);
+  cursor: pointer;
+  pointer-events: auto;
+}
+.sound_icon_bottom {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 3rem;
   font-size: 2rem;
   color: var(--color-primary);
   cursor: pointer;

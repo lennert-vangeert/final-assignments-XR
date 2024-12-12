@@ -2,9 +2,13 @@ import React from "react";
 import useGame from "../stores/useGame";
 
 const SoundOn = () => {
+  const phase = useGame((state) => state.phase);
   const setMusicOff = useGame((state) => state.setMusicOff);
   return (
-    <div className="sound_icon" onClick={setMusicOff}>
+    <div
+      className={phase === "playing" ? "sound_icon_bottom" : "sound_icon"}
+      onClick={setMusicOff}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="64.167"

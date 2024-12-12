@@ -150,7 +150,7 @@ const Plane = () => {
         {/* Attach collider to plane */}
         <CuboidCollider
           ref={colliderRef}
-          args={[5.5, 2, 5.5]}
+          args={[7.5, 2, 7.5]}
         />
       </group>
     </>

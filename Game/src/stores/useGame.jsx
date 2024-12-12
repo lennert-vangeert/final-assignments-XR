@@ -89,6 +89,9 @@ export default create(
       menuCredits: () => {
         set({ menuPhase: "credits" });
       },
+      menuControls: () => {
+        set({ menuPhase: "controls" });
+      },
       // username
       userName: "Player",
       setUserName: (name) => {

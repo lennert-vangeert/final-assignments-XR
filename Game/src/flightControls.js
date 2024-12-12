@@ -25,9 +25,9 @@ export function updatePlaneAxis(x, y, z, planePosition, camera, reset) {
     console.log("reset");
   }
 
-  jawVelocity *= 0.98;
-  pitchVelocity *= 0.98;
-  yawVelocity *= 0.98;
+  jawVelocity *= 0.95;
+  pitchVelocity *= 0.9;
+  yawVelocity *= 0.9;
 
   if (Math.abs(jawVelocity) > maxVelocity)
     jawVelocity = Math.sign(jawVelocity) * maxVelocity;

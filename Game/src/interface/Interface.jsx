@@ -18,10 +18,12 @@ const Interface = () => {
   const menuSettings = useGame((state) => state.menuSettings);
   const menuLeaderboards = useGame((state) => state.menuLeaderboards);
   const menuCredits = useGame((state) => state.menuCredits);
+  const menuControls = useGame((state) => state.menuControls);
   const setUserName = useGame((state) => state.setUserName);
   const userName = useGame((state) => state.userName);
   const isMusicOn = useGame((state) => state.isMusicOn);
   const score = useGame((state) => state.score);
+  const ringLocations = useGame((state) => state.ringLocations);
   const menuAudioRef = useRef(null);
 
   const onchange = (e) => {
@@ -123,14 +125,58 @@ const Interface = () => {
           <div className="main_button" onClick={menuMain}>
             back
           </div>
-          <div className="setting_container">
-            <h3 className="subtitle">Randomized targets</h3>
-            <input className="checkbox" type="checkbox" />
-          </div>
           <div className="main_button" onClick={menuCredits}>
             credits
           </div>
+          <div className="main_button" onClick={menuControls}>
+            controls
+          </div>
+          {/* <div className="setting_container">
+            <h3 className="subtitle">Randomized targets</h3>
+            <input className="checkbox" type="checkbox" />
+          </div> */}
         </div>
+      )}
+
+      {phase === "ready" && menuPhase === "controls" && (
+        <>
+          <div className="button_container">
+            <h1 className="title">Controls</h1>
+            <div className="main_button" onClick={menuMain}>
+              back
+            </div>
+          </div>
+          <div className="right_container">
+            <div className="leaderboard_item">
+              <span className="leaderboard_rank">W / Z / ↑</span>
+              <span className="leaderboard_name">Move down</span>
+            </div>
+            <div className="leaderboard_item">
+              <span className="leaderboard_rank">S / ↓</span>
+              <span className="leaderboard_name">Move up</span>
+            </div>
+            <div className="leaderboard_item">
+              <span className="leaderboard_rank">A / Q</span>
+              <span className="leaderboard_name">Pitch left</span>
+            </div>
+            <div className="leaderboard_item">
+              <span className="leaderboard_rank">D</span>
+              <span className="leaderboard_name">Pitch right</span>
+            </div>
+            <div className="leaderboard_item">
+              <span className="leaderboard_rank">←</span>
+              <span className="leaderboard_name">Yaw left</span>
+            </div>
+            <div className="leaderboard_item">
+              <span className="leaderboard_rank">→</span>
+              <span className="leaderboard_name">Yaw Right</span>
+            </div>
+            <div className="leaderboard_item">
+              <span className="leaderboard_rank">Lshift</span>
+              <span className="leaderboard_name">Boost</span>
+            </div>
+          </div>
+        </>
       )}
       {phase === "ready" && menuPhase === "leaderboards" && (
         <>
@@ -161,7 +207,9 @@ const Interface = () => {
           <div className="time" ref={time}>
             0.00
           </div>
-          <div className="score">Score: {score}</div>
+          <div className="score">
+            Score: {score}/{ringLocations.length}
+          </div>
         </div>
       )}
 
