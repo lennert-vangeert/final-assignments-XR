@@ -7,8 +7,13 @@ const Leaderboard = () => {
     fetch(`${import.meta.env.VITE_API_URL}/leaderboard`)
       .then((res) => res.json())
       .then((data) => {
-        const sortedData = data
-          .filter((item) => !isNaN(parseFloat(item.score)))
+        const userShortestTimes = data.reduce((acc, item) => {
+          if (!acc[item.userName] || parseFloat(item.score) < parseFloat(acc[item.userName].score)) {
+            acc[item.userName] = item;
+          }
+          return acc;
+        }, {});
+        const sortedData = Object.values(userShortestTimes)
           .sort((a, b) => parseFloat(a.score) - parseFloat(b.score))
           .slice(0, 10);
         setLeaderBoard(sortedData);
