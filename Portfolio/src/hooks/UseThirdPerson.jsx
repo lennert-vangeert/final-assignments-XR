@@ -6,20 +6,12 @@ import { useFrame } from "@react-three/fiber";
 import { useKeyboardControls } from "@react-three/drei";
 import { useControls } from "leva";
 import { degToRad } from "three/src/math/MathUtils.js";
-import { Howl } from "howler";
 
 const normalizeAngle = (angle) => {
   while (angle > Math.PI) angle -= 2 * Math.PI;
   while (angle < -Math.PI) angle += 2 * Math.PI;
   return angle;
 };
-
-// Create a Howl instance for the engine sound
-const engineSound = new Howl({
-  src: ["/audio/engine.mp3"], // Replace with your engine sound file
-  loop: true,
-  volume: 1, // Initial volume
-});
 
 const lerpAngle = (start, end, t) => {
   start = normalizeAngle(start);
@@ -37,19 +29,15 @@ const lerpAngle = (start, end, t) => {
 };
 
 const UseThirdPerson = ({ isInVehicle }) => {
-  const { WALK_SPEED, RUN_SPEED, ROTATION_SPEED } = useControls(
-    "Character Control",
-    {
-      WALK_SPEED: { value: 2, min: 0.1, max: 4, step: 0.1 },
-      RUN_SPEED: { value: 1.6, min: 0.2, max: 12, step: 0.1 },
-      ROTATION_SPEED: {
-        value: 0.04,
-        min: degToRad(0.1),
-        max: degToRad(5),
-        step: degToRad(0.1),
-      },
-    }
-  );
+  const { WALK_SPEED, ROTATION_SPEED } = useControls("Character Control", {
+    WALK_SPEED: { value: 3, min: 0.1, max: 4, step: 0.1 },
+    ROTATION_SPEED: {
+      value: 0.04,
+      min: degToRad(0.1),
+      max: degToRad(5),
+      step: degToRad(0.1),
+    },
+  });
   const [, get] = useKeyboardControls();
   const container = useRef();
   const player = useRef();
@@ -63,22 +51,11 @@ const UseThirdPerson = ({ isInVehicle }) => {
   const cameraLookAt = useRef(new THREE.Vector3());
   const rigidBodyRef = useRef();
   const speedRef = useRef(0);
-
-  useEffect(() => {
-    // Play engine sound when the component mounts
-
-    engineSound.play();
-
-    // Stop sound on unmount
-    return () => {
-      engineSound.stop();
-    };
-  }, []);
+  const lightRef = useRef();
 
   useFrame(({ camera }) => {
     if (rigidBodyRef.current) {
       const velocity = rigidBodyRef.current.linvel();
-
       const movement = {
         x: 0,
         z: 0,
@@ -103,7 +80,7 @@ const UseThirdPerson = ({ isInVehicle }) => {
         movement.x = -1;
       }
       if (get().forward || get().backward || get().left || get().right) {
-        setAnimation(isInVehicle ? "Armature|Drive" : "Armature|Run");
+        setAnimation("Armature|Run");
       } else {
         setAnimation("Armature|Idle");
       }
@@ -131,14 +108,6 @@ const UseThirdPerson = ({ isInVehicle }) => {
       rigidBodyRef.current.setLinvel(velocity);
       const speed = Math.sqrt(velocity.x ** 2 + velocity.z ** 2); // Speed calculation
       speedRef.current = speed;
-      const pitch = THREE.MathUtils.lerp(0.8, 2.0, speed); // Map speed to pitch
-
-      if (!isInVehicle) {
-        engineSound.volume(0);
-      } else {
-        engineSound.rate(pitch);
-        engineSound.volume(THREE.MathUtils.lerp(0.3, 1, speed));
-      }
     }
 
     container.current.rotation.y = THREE.MathUtils.lerp(
@@ -154,14 +123,11 @@ const UseThirdPerson = ({ isInVehicle }) => {
       cameraLookAt.current.lerp(cameraWorldTarget.current, 1);
       camera.lookAt(cameraLookAt.current);
     }
-
-    // console.log(cameraLookAt.current);
   });
 
   return (
     <RigidBody
       canSleep={false}
-      position={[-15, -2, -54]}
       colliders={false}
       lockRotations
       ref={rigidBodyRef}
@@ -169,8 +135,9 @@ const UseThirdPerson = ({ isInVehicle }) => {
       <group ref={container}>
         <group ref={cameraTarget} position-z={1.5}></group>
         <group ref={cameraPosition} position-y={0.75} position-z={-2}></group>
+        
         <group ref={player}>
-          <Player currentAnimation={animation} isInVehicle={isInVehicle} />
+          <Player currentAnimation={animation} />
         </group>
       </group>
       <CapsuleCollider position={[0, 0.3, 0]} args={[0.2, 0.1]} />

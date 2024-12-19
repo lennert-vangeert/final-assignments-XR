@@ -3,13 +3,12 @@ import React, { useEffect, useRef } from "react";
 
 const Player = ({ currentAnimation, isInVehicle }) => {
   const player = useGLTF("/models/player/scene.gltf");
-  const car = useGLTF("/models/car/scene.gltf");
 
   const animations = useAnimations(player.animations, player.scene);
 
   useEffect(() => {
     // Ensure the current animation exists and play it
-    if (animations.actions[currentAnimation] || !isInVehicle) {
+    if (animations.actions[currentAnimation]) {
       animations.actions[currentAnimation].reset().fadeIn(0.24).play();
     } else {
       console.warn(`Animation ${currentAnimation} not found.`);
@@ -21,7 +20,7 @@ const Player = ({ currentAnimation, isInVehicle }) => {
         animations.actions[currentAnimation].fadeOut(0.24);
       }
     };
-  }, [currentAnimation, animations, isInVehicle]);
+  }, [currentAnimation, animations]);
 
   useEffect(() => {
     player.scene.traverse((child) => {
@@ -34,12 +33,7 @@ const Player = ({ currentAnimation, isInVehicle }) => {
 
   return (
     <group>
-      {/* if isInVehicle show car otherwise show player */}
-      {isInVehicle ? (
-        <primitive object={car.scene} scale={0.3} />
-      ) : (
-        <primitive object={player.scene} scale={0.075} position={[0, 0, 0]} />
-      )}
+      <primitive object={player.scene} scale={0.075} position={[0, 0, 0]} />
     </group>
   );
 };

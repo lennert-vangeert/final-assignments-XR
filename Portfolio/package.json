@@ -1,7 +1,7 @@
 {
-  "name": "XR-Physics",
+  "name": "3D portfolio",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -23,6 +23,7 @@
     "r3f-perf": "^7.2.1",
     "react": "18.3",
     "react-dom": "18.3",
-    "three": "^0.166.1"
+    "three": "^0.166.1",
+    "zustand": "^5.0.2"
   }
 }

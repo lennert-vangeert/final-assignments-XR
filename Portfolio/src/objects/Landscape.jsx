@@ -3,7 +3,7 @@ import { RigidBody } from "@react-three/rapier";
 import React, { useEffect } from "react";
 
 const Landscape = () => {
-  const landscape = useGLTF("/models/landscape/portfolio-landscape.gltf");
+  const landscape = useGLTF("/models/landscape/portfolio-new.gltf");
   useEffect(() => {
     landscape.scene.traverse((child) => {
       if (child.isMesh) {
@@ -14,7 +14,7 @@ const Landscape = () => {
   }, []);
   return (
     <RigidBody friction={1} type="fixed" colliders="trimesh">
-      <primitive object={landscape.scene} scale={1} position={[0, 0, 0]} />
+      <primitive object={landscape.scene} scale={.5} position={[0, 0, 0]} />
     </RigidBody>
   );
 };
