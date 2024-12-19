@@ -1,0 +1,65 @@
+CONTROLS STAAN BIJ SETTINGS
+
+
+- (naam)
+ (feedback)
+
+vb
+- Lennert
+ Heel mooi maar fix...
+
+- Kylian
+ Misschien nog een aanduiding naar waar de volgende ring zich bevind. een beacon van boven naar de ring.
+ Een ping pong script voor je leaderboard constant te laden ;)
+ Mss herbekijken hoe je de credits toont? Een leukere manier vinden, een easter egg ergens als je letterlijk credits typt dat ze leuk op het scherm komen.
+
+
+-florian
+nice game, alleen crash ik soms random hebik het gevoel
+
+
+-Lukas
+TOP! 10/10
+
+- Siebe
+[ ] buitenkant game die restricted is ipv wit aanduiden op een andere manier
+[ ] pijltje naar beneden is naar boven sturen en pijltje naar boven is naar beneden? zijn dit echte vliegtuig mechanics?
+[ ] start menu verticaal in het midden centreren
+[ ] iets van interactable nog?
+[ ] al bij al, super aangename game good job 
+
+
+-arne
+ - ik had de check point wel gehaald¡ voor de rest wel nice game 
+
+Jens:
+- Random ahh crashes
+- Camera movement beetje whacky, zou misschien lerping kunnen gebruiken. makkelijk om orientatie en plaats te verliezen
+- Toon shader / outline alleen op de plane?
+- Boosting kan wat particles gebruiken en propeler snelheid.
+- Ik mis 2 torens.
+- Constant movement? waarom niet alleen als je forward in duwt?
+- Orbit controls zou ook nice zijn om gewoon eens rond te kijken. momenteel gewoon locked
+
+
+- quinten
+nice game, misschien Arrow die wijst naar de dichtstbijzijnde loop.
+geen gas geven zou misschien beter zijn dat je dan velocity verliest en daalt
+
+- lien
+mega nice! ik zou enkel de cirkeltjes in een ander kleur zetten 
+
+- stef
+Leuk spel, ziet er goed afgewerkt uit! hitboxen soms precies wat verraderlijk
+
+Margot:
+- Je kan de hele tijd naar boven gaan dus je kan daar een boundary zetten. 
+
+Charlotte:
+- mss direct na game over een restart button ipv direct terug naar het menu te gaan. Maybe change where the rings are when you reload/loose?
+Ik crash random 
+
+Ari: GOODJOBB Way to go Lenny! So about these controls huh.... jkjk maar camera movent trips ur brain badly and you forget how to fly certain directions. for the rest reallyy nicee :3 >w<
+your control key on keyboard is a bit loose :d
+
+Aya: okay okay okay!! controls are better than i thought, did you think of adding obstacles in the sky? birds or other Flying planes? that if we crash into them we die..hehe :P GOOD JOB LENNY!
