@@ -24,11 +24,11 @@ export default function World({ camera }) {
       </EffectComposer> */}
         <directionalLight
           castShadow
-          position={[0, 5, 0]}
+          position={[30, 10, 0]}
           intensity={1}
           
         />
-      <ambientLight intensity={0.2} />
+      <ambientLight intensity={0.5} />
 
       <Physics gravity={[0, -9.81, 0]}>
         <group position={[0, -10, 0]}>

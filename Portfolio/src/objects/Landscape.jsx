@@ -14,7 +14,7 @@ const Landscape = () => {
   }, []);
   return (
     <RigidBody friction={1} type="fixed" colliders="trimesh">
-      <primitive object={landscape.scene} scale={.5} position={[0, 0, 0]} />
+      <primitive object={landscape.scene} scale={.4} position={[0, 7, 0]} />
     </RigidBody>
   );
 };

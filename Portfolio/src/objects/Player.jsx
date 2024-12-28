@@ -33,7 +33,7 @@ const Player = ({ currentAnimation, isInVehicle }) => {
 
   return (
     <group>
-      <primitive object={player.scene} scale={0.075} position={[0, 0, 0]} />
+      <primitive object={player.scene} scale={0.12} position={[0, 0, 0]} />
     </group>
   );
 };
