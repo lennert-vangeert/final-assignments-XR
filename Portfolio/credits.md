@@ -17,3 +17,8 @@
 - vehicle 3: https://market.pmnd.rs/model/police-car: kenney
 - fire hydrant: "Fire Hydrant low poly" (https://skfb.ly/oKtM7) by daniel.2U is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 - picnic table: "Low Poly Picnic Table" (https://skfb.ly/or9EK) by Kelly Liang is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+- donut: https://market.pmnd.rs/model/donut-sprinkles: kenney
+- tree: https://market.pmnd.rs/model/tree-lime: Alaric.Baraou
+- rock: https://market.pmnd.rs/model/large-menhir: Alaric.Baraou
+- plant: https://market.pmnd.rs/model/plant-pirate-kit: kenney
+- "Various Low-Poly Street Lights" (https://skfb.ly/oORD8) by KMB3D is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
