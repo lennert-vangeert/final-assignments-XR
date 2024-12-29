@@ -1,6 +1,5 @@
 import { useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
-import { useControls } from "leva";
 import React, { useEffect } from "react";
 
 const StreetLight = ({ positionX, positionY, positionZ, rotation, light }) => {
@@ -15,13 +14,6 @@ const StreetLight = ({ positionX, positionY, positionZ, rotation, light }) => {
     rotation = 0;
   }
 
-  // const { positionX, positionY, positionZ, rotation } =
-  //   useControls({
-  //     positionX: { value: -6, min: -100, max: 100 },
-  //     positionY: { value: 6, min: -100, max: 100 },
-  //     positionZ: { value: -1, min: -100, max: 100 },
-  //     rotation: { value: 4.71, min: 0, max: Math.PI * 2 },
-  //   });
 
   useEffect(() => {
     clonedScene.traverse((child) => {

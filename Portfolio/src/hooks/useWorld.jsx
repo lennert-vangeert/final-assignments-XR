@@ -4,7 +4,7 @@ import { subscribeWithSelector } from "zustand/middleware";
 export default create(
   subscribeWithSelector((set) => {
     return {
-      phase: "menu",
+      phase: "exploring",
       menuPhase: "main",
       isMusicOn: localStorage.getItem("isMusicOn") || false,
 

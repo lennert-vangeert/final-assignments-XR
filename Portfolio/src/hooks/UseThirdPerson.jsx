@@ -1,5 +1,5 @@
 import { CapsuleCollider, RigidBody } from "@react-three/rapier";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Player from "../objects/Player";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
@@ -28,16 +28,7 @@ const lerpAngle = (start, end, t) => {
   return normalizeAngle(start + (end - start) * t);
 };
 
-const UseThirdPerson = ({ isInVehicle }) => {
-  const { WALK_SPEED, ROTATION_SPEED } = useControls("Character Control", {
-    WALK_SPEED: { value: 3, min: 0.1, max: 4, step: 0.1 },
-    ROTATION_SPEED: {
-      value: 0.04,
-      min: degToRad(0.1),
-      max: degToRad(5),
-      step: degToRad(0.1),
-    },
-  });
+const UseThirdPerson = () => {
   const [, get] = useKeyboardControls();
   const container = useRef();
   const player = useRef();
@@ -51,7 +42,6 @@ const UseThirdPerson = ({ isInVehicle }) => {
   const cameraLookAt = useRef(new THREE.Vector3());
   const rigidBodyRef = useRef();
   const speedRef = useRef(0);
-  const lightRef = useRef();
 
   useFrame(({ camera }) => {
     if (rigidBodyRef.current) {
@@ -62,7 +52,7 @@ const UseThirdPerson = ({ isInVehicle }) => {
       };
 
       // Determine speed multiplier based on whether in a vehicle
-      const speedMultiplier = isInVehicle ? 2 : 1; // Double speed when in vehicle
+      const speedMultiplier = 1; // Double speed when in vehicle
 
       if (get().forward) {
         movement.z = 1;
@@ -79,6 +69,7 @@ const UseThirdPerson = ({ isInVehicle }) => {
       if (get().right) {
         movement.x = -1;
       }
+
       if (get().forward || get().backward || get().left || get().right) {
         setAnimation("Armature|Run");
       } else {
@@ -86,20 +77,21 @@ const UseThirdPerson = ({ isInVehicle }) => {
       }
 
       if (movement.x !== 0) {
-        rotationTarget.current += ROTATION_SPEED * movement.x;
+        rotationTarget.current += 0.04 * movement.x;
       }
 
       if (movement.x !== 0 || movement.z !== 0) {
         playerRotationTarget.current = Math.atan2(movement.x, movement.z);
         velocity.x =
           Math.sin(rotationTarget.current + playerRotationTarget.current) *
-          WALK_SPEED *
+          2.5 *
           speedMultiplier;
         velocity.z =
           Math.cos(rotationTarget.current + playerRotationTarget.current) *
-          WALK_SPEED *
+          2.5 *
           speedMultiplier;
       }
+
       player.current.rotation.y = lerpAngle(
         player.current.rotation.y,
         playerRotationTarget.current,
@@ -110,17 +102,21 @@ const UseThirdPerson = ({ isInVehicle }) => {
       speedRef.current = speed;
     }
 
+    // Smooth container rotation
     container.current.rotation.y = THREE.MathUtils.lerp(
       container.current.rotation.y,
       rotationTarget.current,
       0.1
     );
-    cameraPosition.current.getWorldPosition(cameraWorldPosition.current);
-    camera.position.lerp(cameraWorldPosition.current, 1);
 
+    // Smooth camera position
+    cameraPosition.current.getWorldPosition(cameraWorldPosition.current);
+    camera.position.lerp(cameraWorldPosition.current, 0.1);
+
+    // Smooth camera look-at target
     if (cameraTarget.current) {
       cameraTarget.current.getWorldPosition(cameraWorldTarget.current);
-      cameraLookAt.current.lerp(cameraWorldTarget.current, 1);
+      cameraLookAt.current.lerp(cameraWorldTarget.current, 0.1);
       camera.lookAt(cameraLookAt.current);
     }
   });
@@ -135,7 +131,7 @@ const UseThirdPerson = ({ isInVehicle }) => {
       <group ref={container}>
         <group ref={cameraTarget} position-z={1.5}></group>
         <group ref={cameraPosition} position-y={0.75} position-z={-2}></group>
-        
+
         <group ref={player}>
           <Player currentAnimation={animation} />
         </group>
