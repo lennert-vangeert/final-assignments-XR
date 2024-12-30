@@ -24,6 +24,21 @@ const MainInterface = () => {
           <div className={styles.blur}></div>
         </div>
       )}
+      {phase === "exploring" && (
+        <>
+          <div className={styles.exploreScreen}>
+            <div className={`${styles.corner} ${styles.topLeft}`}>
+              <p className={styles.text}>
+                Tip: explore this world and interact with the red point of
+                interest.
+              </p>
+            </div>
+            <div className={`${styles.corner} ${styles.topRight}`}></div>
+            <div className={`${styles.corner} ${styles.bottomLeft}`}></div>
+            <div className={`${styles.corner} ${styles.bottomRight}`}></div>
+          </div>
+        </>
+      )}
     </>
   );
 };

@@ -47,6 +47,7 @@ const Credits = () => {
               Pixabay
             </a>
           </li>
+          <li>HDR by NASA: https://svs.gsfc.nasa.gov/4851/</li>
         </ul>
       </div>
     </div>

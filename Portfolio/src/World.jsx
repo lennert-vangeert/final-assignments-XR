@@ -5,7 +5,6 @@ import UseThirdPerson from "./hooks/UseThirdPerson";
 import Landscape from "./objects/Landscape";
 import StreetLight from "./objects/StreetLight";
 import useWorld from "./hooks/useWorld";
-import MainInterface from "./interface/MainInterface";
 import Poi from "./objects/Poi";
 
 export default function World() {
@@ -16,6 +15,7 @@ export default function World() {
       {/* <Perf position="top-left" /> */}
       <OrbitControls makeDefault />
       <ambientLight intensity={1.5} />
+      <Environment files="/hdr/nightsky.hdr" background blur={.5}/>
       <Physics gravity={[0, -9.81, 0]}>
         <group position={[0, -10, 0]}>
           <Landscape />

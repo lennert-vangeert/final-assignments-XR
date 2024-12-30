@@ -85,6 +85,44 @@
   top: 0px;
 }
 
+.exploreScreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-family: "Roboto", sans-serif;
+}
+.exploreScreen .text {
+  color: white;
+}
+
+.exploreScreen .corner {
+  position: absolute;
+  width: 25%;
+  height: 25%;
+}
+
+.exploreScreen .topLeft {
+  top: 2%;
+  left: 2%;
+}
+
+.exploreScreen .topRight {
+  top: 2%;
+  right: 2%;
+}
+
+.exploreScreen .bottomLeft {
+  bottom: 2%;
+  left: 2%;
+}
+
+.exploreScreen .bottomRight {
+  bottom: 2%;
+  right: 2%;
+}
+
 .screenContent {
   display: flex;
   flex-direction: column;
