@@ -49,6 +49,8 @@ const UseThirdPerson = () => {
   const isAmbienceOn = useWorld((state) => state.isAmbienceOn);
   const ambience = new Audio("/audio/ambience.mp3");
   const bm = new Audio("/audio/bm.mp3");
+  const canJump = useRef(true);
+
   useFrame(({ camera }) => {
     if (rigidBodyRef.current) {
       const velocity = rigidBodyRef.current.linvel();
@@ -57,8 +59,7 @@ const UseThirdPerson = () => {
         z: 0,
       };
 
-      // Determine speed multiplier based on whether in a vehicle
-      const speedMultiplier = 1; // Double speed when in vehicle
+      const speedMultiplier = 1;
       if (phase === "menu") {
         setAnimation("Armature|Idle");
         if (get().escape) {
@@ -116,28 +117,31 @@ const UseThirdPerson = () => {
             speedMultiplier;
         }
 
+        if (get().jump && canJump.current) {
+          velocity.y = 3;
+          canJump.current = false;
+          setTimeout(() => (canJump.current = true), 1000);
+        }
+
         player.current.rotation.y = lerpAngle(
           player.current.rotation.y,
           playerRotationTarget.current,
           1
         );
         rigidBodyRef.current.setLinvel(velocity);
-        const speed = Math.sqrt(velocity.x ** 2 + velocity.z ** 2); // Speed calculation
+        const speed = Math.sqrt(velocity.x ** 2 + velocity.z ** 2);
         speedRef.current = speed;
       }
 
-      // Smooth container rotation
       container.current.rotation.y = THREE.MathUtils.lerp(
         container.current.rotation.y,
         rotationTarget.current,
         0.1
       );
 
-      // Smooth camera position
       cameraPosition.current.getWorldPosition(cameraWorldPosition.current);
       camera.position.lerp(cameraWorldPosition.current, 0.1);
 
-      // Smooth camera look-at target
       if (cameraTarget.current) {
         cameraTarget.current.getWorldPosition(cameraWorldTarget.current);
         cameraLookAt.current.lerp(cameraWorldTarget.current, 0.1);

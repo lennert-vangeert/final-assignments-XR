@@ -15,6 +15,7 @@ root.render(
         { name: "backward", keys: ["ArrowDown", "KeyS"] },
         { name: "left", keys: ["ArrowLeft", "KeyA"] },
         { name: "right", keys: ["ArrowRight", "KeyD"] },
+        { name: "jump", keys: ["Space"] },
         { name: "escape", keys: ["Escape"] },
         // { name: "jump", keys: ["Space"] },
       ]}
