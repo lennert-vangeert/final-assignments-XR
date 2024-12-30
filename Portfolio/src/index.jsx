@@ -3,9 +3,9 @@ import ReactDOM from "react-dom/client";
 import { Canvas } from "@react-three/fiber";
 import World from "./World.jsx";
 import { KeyboardControls } from "@react-three/drei";
+import MainInterface from "./interface/MainInterface.jsx";
 
 const root = ReactDOM.createRoot(document.querySelector("#root"));
-
 root.render(
   <>
     <KeyboardControls
@@ -14,6 +14,7 @@ root.render(
         { name: "backward", keys: ["ArrowDown", "KeyS"] },
         { name: "left", keys: ["ArrowLeft", "KeyA"] },
         { name: "right", keys: ["ArrowRight", "KeyD"] },
+        { name: "escape", keys: ["Escape"] },
         // { name: "jump", keys: ["Space"] },
       ]}
     >
@@ -28,6 +29,7 @@ root.render(
       >
         <World />
       </Canvas>
+      <MainInterface />
     </KeyboardControls>
   </>
 );

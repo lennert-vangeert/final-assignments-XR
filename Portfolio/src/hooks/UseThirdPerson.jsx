@@ -6,6 +6,7 @@ import { useFrame } from "@react-three/fiber";
 import { useKeyboardControls } from "@react-three/drei";
 import { useControls } from "leva";
 import { degToRad } from "three/src/math/MathUtils.js";
+import useWorld from "./useWorld";
 
 const normalizeAngle = (angle) => {
   while (angle > Math.PI) angle -= 2 * Math.PI;
@@ -42,6 +43,8 @@ const UseThirdPerson = () => {
   const cameraLookAt = useRef(new THREE.Vector3());
   const rigidBodyRef = useRef();
   const speedRef = useRef(0);
+  const phase = useWorld((state) => state.phase);
+  const setExploring = useWorld((state) => state.setExploring);
 
   useFrame(({ camera }) => {
     if (rigidBodyRef.current) {
@@ -53,71 +56,78 @@ const UseThirdPerson = () => {
 
       // Determine speed multiplier based on whether in a vehicle
       const speedMultiplier = 1; // Double speed when in vehicle
-
-      if (get().forward) {
-        movement.z = 1;
-      }
-
-      if (get().backward) {
-        movement.z = -1;
-      }
-
-      if (get().left) {
-        movement.x = 1;
-      }
-
-      if (get().right) {
-        movement.x = -1;
-      }
-
-      if (get().forward || get().backward || get().left || get().right) {
-        setAnimation("Armature|Run");
-      } else {
+      if (phase === "menu") {
         setAnimation("Armature|Idle");
+        if (get().escape) {
+          setExploring();
+        }
+      }
+      if (phase === "exploring") {
+        if (get().forward) {
+          movement.z = 1;
+        }
+
+        if (get().backward) {
+          movement.z = -1;
+        }
+
+        if (get().left) {
+          movement.x = 1;
+        }
+
+        if (get().right) {
+          movement.x = -1;
+        }
+
+        if (get().forward || get().backward || get().left || get().right) {
+          setAnimation("Armature|Run");
+        } else {
+          setAnimation("Armature|Idle");
+        }
+
+        if (movement.x !== 0) {
+          rotationTarget.current += 0.04 * movement.x;
+        }
+
+        if (movement.x !== 0 || movement.z !== 0) {
+          playerRotationTarget.current = Math.atan2(movement.x, movement.z);
+          velocity.x =
+            Math.sin(rotationTarget.current + playerRotationTarget.current) *
+            2.5 *
+            speedMultiplier;
+          velocity.z =
+            Math.cos(rotationTarget.current + playerRotationTarget.current) *
+            2.5 *
+            speedMultiplier;
+        }
+
+        player.current.rotation.y = lerpAngle(
+          player.current.rotation.y,
+          playerRotationTarget.current,
+          1
+        );
+        rigidBodyRef.current.setLinvel(velocity);
+        const speed = Math.sqrt(velocity.x ** 2 + velocity.z ** 2); // Speed calculation
+        speedRef.current = speed;
       }
 
-      if (movement.x !== 0) {
-        rotationTarget.current += 0.04 * movement.x;
-      }
-
-      if (movement.x !== 0 || movement.z !== 0) {
-        playerRotationTarget.current = Math.atan2(movement.x, movement.z);
-        velocity.x =
-          Math.sin(rotationTarget.current + playerRotationTarget.current) *
-          2.5 *
-          speedMultiplier;
-        velocity.z =
-          Math.cos(rotationTarget.current + playerRotationTarget.current) *
-          2.5 *
-          speedMultiplier;
-      }
-
-      player.current.rotation.y = lerpAngle(
-        player.current.rotation.y,
-        playerRotationTarget.current,
-        1
+      // Smooth container rotation
+      container.current.rotation.y = THREE.MathUtils.lerp(
+        container.current.rotation.y,
+        rotationTarget.current,
+        0.1
       );
-      rigidBodyRef.current.setLinvel(velocity);
-      const speed = Math.sqrt(velocity.x ** 2 + velocity.z ** 2); // Speed calculation
-      speedRef.current = speed;
-    }
 
-    // Smooth container rotation
-    container.current.rotation.y = THREE.MathUtils.lerp(
-      container.current.rotation.y,
-      rotationTarget.current,
-      0.1
-    );
+      // Smooth camera position
+      cameraPosition.current.getWorldPosition(cameraWorldPosition.current);
+      camera.position.lerp(cameraWorldPosition.current, 0.1);
 
-    // Smooth camera position
-    cameraPosition.current.getWorldPosition(cameraWorldPosition.current);
-    camera.position.lerp(cameraWorldPosition.current, 0.1);
-
-    // Smooth camera look-at target
-    if (cameraTarget.current) {
-      cameraTarget.current.getWorldPosition(cameraWorldTarget.current);
-      cameraLookAt.current.lerp(cameraWorldTarget.current, 0.1);
-      camera.lookAt(cameraLookAt.current);
+      // Smooth camera look-at target
+      if (cameraTarget.current) {
+        cameraTarget.current.getWorldPosition(cameraWorldTarget.current);
+        cameraLookAt.current.lerp(cameraWorldTarget.current, 0.1);
+        camera.lookAt(cameraLookAt.current);
+      }
     }
   });
 

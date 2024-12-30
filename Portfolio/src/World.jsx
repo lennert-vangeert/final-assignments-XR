@@ -5,15 +5,16 @@ import UseThirdPerson from "./hooks/UseThirdPerson";
 import Landscape from "./objects/Landscape";
 import StreetLight from "./objects/StreetLight";
 import useWorld from "./hooks/useWorld";
+import MainInterface from "./interface/MainInterface";
+import Poi from "./objects/Poi";
 
 export default function World() {
   const streetLightLocations = useWorld((state) => state.streetLightLocations);
+  const poiLocations = useWorld((state) => state.poiLocations);
   return (
     <>
-      <Perf position="top-left" />
-      {/* <OrbitControls makeDefault /> */}
-
-      {/* <directionalLight castShadow position={[10, 10, 0]} intensity={1} /> */}
+      {/* <Perf position="top-left" /> */}
+      <OrbitControls makeDefault />
       <ambientLight intensity={1.5} />
       <Physics gravity={[0, -9.81, 0]}>
         <group position={[0, -10, 0]}>
@@ -28,13 +29,15 @@ export default function World() {
               light={location[4]}
             />
           ))}
-
-          {/* <RigidBody type="fixed" restitution={0} friction={0.7}>
-            <mesh receiveShadow position-y={-1.76}>
-              <boxGeometry args={[50, 0.2, 50]} />
-              <meshStandardMaterial color="greenyellow" />
-            </mesh>
-          </RigidBody> */}
+          {poiLocations.map((location, index) => (
+            <Poi
+              key={index}
+              positionX={location[0]}
+              positionY={location[1]}
+              positionZ={location[2]}
+              command={location[3]}
+            />
+          ))}
         </group>
         <UseThirdPerson />
       </Physics>

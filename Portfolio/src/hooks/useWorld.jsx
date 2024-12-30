@@ -22,18 +22,24 @@ export default create(
         [-20, 6, 6.4, 1.56, true],
         [-26.5, 6, 6.4, 1.56, false],
       ],
+      poiLocations: [
+        [-1.8, 6, 16.95, "whiskerwings"],
+        [1, 6, 19.1, "room"],
+        [10.3, 6, 12.5, "car"],
+        [-2, 6, 0, "credits"],
+      ],
 
-      start: () => {
+      setExploring: () => {
         console.log("start");
         set((state) => {
-          if (state.phase === "ready") {
+          if (state.phase === "menu") {
             return { phase: "exploring" };
           }
 
           return {};
         });
       },
-      end: () => {
+      setMenu: () => {
         set((state) => {
           if (state.phase === "exploring") {
             return {
@@ -41,6 +47,14 @@ export default create(
             };
           }
           return {};
+        });
+      },
+      setMenuPhase: (newMenuPhase) => {
+        set(() => {
+          return {
+            phase: "menu",
+            menuPhase: newMenuPhase,
+          };
         });
       },
     };

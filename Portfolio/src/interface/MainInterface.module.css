@@ -1,0 +1,118 @@
+:root {
+  --background-rgb: 15 15 15;
+  --blue-rgb: 33 150 243;
+  --primary-rgb: var(--blue-rgb);
+}
+
+.screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scaleY(0) scaleX(0); /* Start in closed state */
+  height: 90%;
+  width: 90%;
+  display: flex;
+  border: 3px solid rgb(var(--primary-rgb) / 80%);
+  aspect-ratio: 10 / 16;
+  border-radius: 1rem;
+  background-color: rgb(var(--primary-rgb) / 15%);
+  overflow: hidden;
+  z-index: 100;
+  animation: foldOpen 1s forwards; /* Trigger the animation */
+}
+
+/* Keyframes for fold open animation */
+@keyframes foldOpen {
+  0% {
+    transform: translate(-50%, -50%) scaleY(0) scaleX(0); /* Closed state */
+  }
+  50% {
+    transform: translate(-50%, -50%) scaleY(1) scaleX(0); /* Open vertically */
+  }
+  100% {
+    transform: translate(-50%, -50%) scaleY(1) scaleX(1); /* Fully open */
+  }
+}
+
+.screen:after,
+.screen:before {
+  content: "";
+  height: 5px;
+  position: absolute;
+  z-index: 110;
+  left: 50%;
+  translate: -50% 0%;
+  background-color: white;
+}
+
+.screen:before {
+  width: 15%;
+  top: 0rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+.screen:after {
+  width: 25%;
+  bottom: 0rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+@keyframes pan-overlay {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 0% -100%;
+  }
+}
+
+.screenOverlay {
+  background: linear-gradient(
+    rgb(var(--primary-rgb) / 0.15),
+    rgb(var(--primary-rgb) / 0.15) 3px,
+    transparent 3px,
+    transparent 9px
+  );
+  background-size: 100% 9px;
+  height: 100%;
+  width: 100%;
+  animation: pan-overlay 22s infinite linear;
+  position: absolute;
+  z-index: 20;
+  left: 0px;
+  top: 0px;
+}
+
+.screenContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  flex-grow: 1;
+  gap: 4rem;
+  position: relative;
+  z-index: 110;
+  margin: 1rem;
+  border: 1px solid rgb(var(--primary-rgb) / 50%);
+  border-radius: 0.6rem;
+  padding: 1rem 3rem;
+}
+
+.screenUser {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+
+.blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+}

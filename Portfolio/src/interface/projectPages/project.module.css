@@ -1,0 +1,69 @@
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.description {
+  font-size: 1.2rem;
+  color: white;
+  margin-bottom: 2rem;
+}
+.anchor {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.contentContainer {
+  position: absolute;
+  z-index: 200;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+  height: 100%;
+  padding: 2rem;
+  font-family: "Roboto", sans-serif;
+  color: white;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 50%;
+}
+.creditTextContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+}
+.creditTextContainer ul li {
+  margin-bottom: .5rem;
+}
+.creditTextContainer a {
+  color: white;
+}
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40%;
+}
+
+.imageContainer img {
+  max-width: 100%;
+  border-radius: 1rem;
+}

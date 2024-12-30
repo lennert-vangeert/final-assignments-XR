@@ -8,17 +8,14 @@
 
 - "Fire Hydrant low poly" (https://skfb.ly/oKtM7) by daniel.2U is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 - player model: "Low Poly Human" (https://skfb.ly/6YuZD) by amiutass is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
-- tree 1: https://market.pmnd.rs/model/tree-beech: Alaric.Baraou
-- tree 2: https://market.pmnd.rs/model/tree-lime: Alaric.Baraou
 - buildings: City Kit by Kenney via Poly Pizza
 - wall: https://market.pmnd.rs/model/wall: Kay Lousberg
 - vehicle 1: https://market.pmnd.rs/model/hatchback: kenney
 - vehicle 2: https://market.pmnd.rs/model/sports-sedan: kenney
 - vehicle 3: https://market.pmnd.rs/model/police-car: kenney
-- fire hydrant: "Fire Hydrant low poly" (https://skfb.ly/oKtM7) by daniel.2U is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 - picnic table: "Low Poly Picnic Table" (https://skfb.ly/or9EK) by Kelly Liang is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 - donut: https://market.pmnd.rs/model/donut-sprinkles: kenney
-- tree: https://market.pmnd.rs/model/tree-lime: Alaric.Baraou
 - rock: https://market.pmnd.rs/model/large-menhir: Alaric.Baraou
 - plant: https://market.pmnd.rs/model/plant-pirate-kit: kenney
 - "Various Low-Poly Street Lights" (https://skfb.ly/oORD8) by KMB3D is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+- Menu Sound Effect by <a href="https://pixabay.com/users/soul_serenity_ambience-6817262/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=236386">Soul_Serenity_Ambience</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=236386">Pixabay</a>
