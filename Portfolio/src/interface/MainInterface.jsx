@@ -44,12 +44,20 @@ const MainInterface = () => {
                   <h1>Contact me</h1>
                   <ul className={styles.list}>
                     <li>
-                      <a href="mailto:lennert.vangeert@gmail.com">
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="mailto:lennert.vangeert@gmail.com"
+                      >
                         lennert.vangeert@gmail.com
                       </a>
                     </li>
                     <li>
-                      <a href="https://www.linkedin.com/in/lennert-van-geert/">
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://www.linkedin.com/in/lennert-van-geert/"
+                      >
                         LinkedIn
                       </a>
                     </li>
