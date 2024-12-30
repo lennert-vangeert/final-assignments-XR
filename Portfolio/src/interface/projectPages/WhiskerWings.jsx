@@ -8,12 +8,7 @@ const WhiskerWings = () => {
         <small>Press "esc" to exit</small>
         <h1 className={styles.title}>Whisker wings</h1>
         <p className={styles.description}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa facere
-          eum at eius ullam cumque nam voluptatibus dolores, modi iste
-          laboriosam error beatae eveniet recusandae minus corporis earum itaque
-          libero, hic animi neque vitae maiores magnam. Libero, consequatur qui
-          ratione corporis, temporibus, excepturi eligendi dicta tempore sit cum
-          iure ullam?
+          In this project i made a video game. The game is about a bunny that has to collect red rings. The bunny is in an airplane and has to avoid obstacles. The game is made with React Three Fiber. The goal of this project was to learn more about 3D physics and 3D game development. There is also a leaderboard built with express and mongoDB.
         </p>
         <a
           className={styles.anchor}
