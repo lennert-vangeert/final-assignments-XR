@@ -48,6 +48,26 @@ const Credits = () => {
             </a>
           </li>
           <li>HDR by NASA: https://svs.gsfc.nasa.gov/4851/</li>
+          <li>
+            Ambience by{" "}
+            <a href="https://pixabay.com/users/ruesters-44824806/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=223663">
+              Rumbidzai Masanga
+            </a>{" "}
+            from{" "}
+            <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=223663">
+              Pixabay
+            </a>
+          </li>
+          <li>
+            Music by{" "}
+            <a href="https://pixabay.com/users/electronic-senses-18259555/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=10123">
+              Joel palahi gallego
+            </a>{" "}
+            from{" "}
+            <a href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=10123">
+              Pixabay
+            </a>
+          </li>
         </ul>
       </div>
     </div>

@@ -11,7 +11,7 @@ const Poi = ({ positionX, positionY, positionZ, command }) => {
   const onCollisionEnter = () => {
     setMenuPhase(command);
     audio.currentTime = 0;
-    audio.volume = 0.5;
+    audio.volume = 0.7;
     audio.play();
   };
 

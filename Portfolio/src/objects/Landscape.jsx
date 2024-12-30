@@ -3,7 +3,7 @@ import { RigidBody } from "@react-three/rapier";
 import React, { useEffect } from "react";
 
 const Landscape = () => {
-  const landscape = useGLTF("/models/landscape/portfolio-new.gltf");
+  const landscape = useGLTF("/models/landscape/portfolio-new-compressed.gltf");
   useEffect(() => {
     landscape.scene.traverse((child) => {
       if (child.isMesh) {

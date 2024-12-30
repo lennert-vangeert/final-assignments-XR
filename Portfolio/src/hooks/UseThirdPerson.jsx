@@ -45,7 +45,10 @@ const UseThirdPerson = () => {
   const speedRef = useRef(0);
   const phase = useWorld((state) => state.phase);
   const setExploring = useWorld((state) => state.setExploring);
-
+  const setAmbience = useWorld((state) => state.setAmbience);
+  const isAmbienceOn = useWorld((state) => state.isAmbienceOn);
+  const ambience = new Audio("/audio/ambience.mp3");
+  const bm = new Audio("/audio/bm.mp3");
   useFrame(({ camera }) => {
     if (rigidBodyRef.current) {
       const velocity = rigidBodyRef.current.linvel();
@@ -81,6 +84,18 @@ const UseThirdPerson = () => {
 
         if (get().forward || get().backward || get().left || get().right) {
           setAnimation("Armature|Run");
+
+          if (!isAmbienceOn) {
+            ambience.volume = 0.2;
+            ambience.currentTime = 0;
+            ambience.loop = true;
+            ambience.play();
+            bm.volume = 0.1;
+            bm.currentTime = 0;
+            bm.loop = true;
+            bm.play();
+            setAmbience();
+          }
         } else {
           setAnimation("Armature|Idle");
         }

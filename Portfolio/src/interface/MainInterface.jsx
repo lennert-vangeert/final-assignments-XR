@@ -13,7 +13,6 @@ const MainInterface = () => {
     <>
       {phase === "menu" && (
         <div className={styles.screen}>
-          <div className={styles.screenImage}></div>
           <div className={styles.screenOverlay}></div>
           <div className={styles.screenContent}>
             {menuPhase === "whiskerwings" && <WhiskerWings />}
@@ -27,15 +26,37 @@ const MainInterface = () => {
       {phase === "exploring" && (
         <>
           <div className={styles.exploreScreen}>
-            <div className={`${styles.corner} ${styles.topLeft}`}>
-              <p className={styles.text}>
-                Tip: explore this world and interact with the red point of
-                interest.
-              </p>
+            <div className={styles.cornerContainer}>
+              <div className={`${styles.corner} ${styles.topLeft}`}>
+                <div className={styles.screenOverlay}>
+                  <div className={styles.text}>
+                    Tip: explore this world and interact with the red point of
+                    interest.
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className={`${styles.corner} ${styles.topRight}`}></div>
-            <div className={`${styles.corner} ${styles.bottomLeft}`}></div>
-            <div className={`${styles.corner} ${styles.bottomRight}`}></div>
+            {/* <div className={`${styles.corner} ${styles.topRight}`}></div> */}
+            {/* <div className={`${styles.corner} ${styles.bottomLeft}`}></div> */}
+            <div className={`${styles.corner} ${styles.bottomRight}`}>
+              <div className={styles.screenOverlay}>
+                <div className={styles.text}>
+                  <h1>Contact me</h1>
+                  <ul className={styles.list}>
+                    <li>
+                      <a href="mailto:lennert.vangeert@gmail.com">
+                        lennert.vangeert@gmail.com
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://www.linkedin.com/in/lennert-van-geert/">
+                        LinkedIn
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         </>
       )}

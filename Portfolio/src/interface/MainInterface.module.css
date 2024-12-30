@@ -34,6 +34,18 @@
   }
 }
 
+@keyframes explorerFoldOpen {
+  0% {
+    transform: scaleY(0) scaleX(0); /* Closed state */
+  }
+  50% {
+    transform: scaleY(1) scaleX(0); /* Open vertically */
+  }
+  100% {
+    transform: scaleY(1) scaleX(1); /* Fully open */
+  }
+}
+
 .screen:after,
 .screen:before {
   content: "";
@@ -93,19 +105,53 @@
   height: 100%;
   font-family: "Roboto", sans-serif;
 }
+
+.exploreScreen .corner:after,
+.exploreScreen .corner:before {
+  content: "";
+  height: 5px;
+  position: absolute;
+  z-index: 110;
+  left: 50%;
+  translate: -50% 0%;
+  background-color: white;
+}
+
+.exploreScreen .corner:before {
+  width: 15%;
+  top: 0rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+.exploreScreen .corner:after {
+  width: 25%;
+  bottom: 0rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
 .exploreScreen .text {
   color: white;
 }
 
 .exploreScreen .corner {
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 25%;
-  height: 25%;
+  height: 10%;
+  border: 3px solid rgb(var(--primary-rgb) / 80%);
+  border-radius: 1rem;
+  background-color: rgb(var(--primary-rgb) / 15%);
+  animation: explorerFoldOpen 1s forwards; /* Trigger the animation */
 }
 
 .exploreScreen .topLeft {
   top: 2%;
   left: 2%;
+  height: 7%;
 }
 
 .exploreScreen .topRight {
@@ -121,8 +167,32 @@
 .exploreScreen .bottomRight {
   bottom: 2%;
   right: 2%;
+  height: 20%;
+  width: 15%;
 }
 
+.list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  gap: .2rem;
+  margin: 0;
+  padding: 0;
+}
+.list li {
+  margin: 0;
+}
+.list a {
+  color: white;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s;
+}
+.text {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+}
 .screenContent {
   display: flex;
   flex-direction: column;
@@ -153,4 +223,39 @@
   width: 100%;
   height: 100%;
   backdrop-filter: blur(5px);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .screen {
+    height: 80%;
+    width: 80%;
+  }
+
+  .screenContent {
+    gap: 2rem;
+    padding: 1rem 2rem;
+  }
+
+  .exploreScreen .corner {
+    width: 30%;
+    height: 30%;
+  }
+}
+
+@media (max-width: 480px) {
+  .screen {
+    height: 70%;
+    width: 70%;
+  }
+
+  .screenContent {
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .exploreScreen .corner {
+    width: 35%;
+    height: 35%;
+  }
 }

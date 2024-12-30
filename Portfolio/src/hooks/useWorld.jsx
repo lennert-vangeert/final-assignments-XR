@@ -6,7 +6,7 @@ export default create(
     return {
       phase: "exploring",
       menuPhase: "main",
-      isMusicOn: localStorage.getItem("isMusicOn") || false,
+      isAmbienceOn: false,
 
       streetLightLocations: [
         [-6, 6, -1, 4.74, true],
@@ -54,6 +54,13 @@ export default create(
           return {
             phase: "menu",
             menuPhase: newMenuPhase,
+          };
+        });
+      },
+      setAmbience: () => {
+        set(() => {
+          return {
+            isAmbienceOn: true,
           };
         });
       },
