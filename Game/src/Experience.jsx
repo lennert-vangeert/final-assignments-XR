@@ -12,6 +12,7 @@ import { useFrame } from "@react-three/fiber";
 import MenuPlane from "./objects/MenuPlane";
 import useGame from "./stores/useGame";
 import RingTwo from "./objects/RingTwo";
+import DeadZones from "./objects/DeadZones";
 
 export default function Experience() {
   const ringLocations = useGame((state) => state.ringLocations);
@@ -21,8 +22,6 @@ export default function Experience() {
       {/* <Perf position="top-left" /> */}
       {/* <OrbitControls makeDefault /> */}
 
-      {/* Day-Night Cycle Component */}
-      {/* <DayNightCycle /> */}
       <ambientLight intensity={2} />
       <directionalLight
         castShadow
@@ -41,6 +40,7 @@ export default function Experience() {
       <Physics gravity={[0, -9.81, 0]}>
         {phase === "playing" && (
           <>
+          <DeadZones />
             <Plane />
             {/* <Jerrycan /> */}
             {/* <RingTwo diameter={5} position={[5, 10, -7]} /> */}
@@ -80,7 +80,7 @@ export default function Experience() {
         )}
         {phase === "ready" && <MenuPlane />}
       </Physics>
-      <Sky sunPosition={[100, 10, 100]} />
+      <Sky sunPosition={[100, 10, 100]} distance={100000} />
     </>
   );
 }

@@ -1,5 +1,5 @@
 :root {
-  --background-rgb: 15 15 15;
+  --background-rgb: 254 18 25;
   --blue-rgb: 33 150 243;
   --primary-rgb: var(--blue-rgb);
 }
@@ -152,6 +152,7 @@
   top: 2%;
   left: 2%;
   height: 7%;
+  width: 26%;
 }
 
 .exploreScreen .topRight {

@@ -9,7 +9,6 @@ import EndTime from "./EndTime";
 
 const Interface = () => {
   const time = useRef();
-  const restart = useGame((state) => state.restart);
   const start = useGame((state) => state.start);
   const ready = useGame((state) => state.ready);
   const phase = useGame((state) => state.phase);
@@ -24,6 +23,9 @@ const Interface = () => {
   const isMusicOn = useGame((state) => state.isMusicOn);
   const score = useGame((state) => state.score);
   const ringLocations = useGame((state) => state.ringLocations);
+  const toggleBeacons = useGame((state) => state.toggleBeacons);
+  const beaconsOn = useGame((state) => state.beaconsOn);
+  const flewOutOfMap = useGame((state) => state.flewOutOfMap);
   const menuAudioRef = useRef(null);
 
   const onchange = (e) => {
@@ -61,7 +63,7 @@ const Interface = () => {
       menuAudio.pause();
       menuAudio.currentTime = 0; // Reset playback position
     };
-  }, [isMusicOn]);
+  }, [isMusicOn, phase]);
 
   useEffect(() => {
     const unsubscribeEffect = addEffect(() => {
@@ -89,6 +91,10 @@ const Interface = () => {
   useEffect(() => {
     setUserName(localStorage.getItem("userName") || "Player");
   }, []);
+
+  const onChange = (e) => {
+    toggleBeacons();
+  };
 
   return (
     <main className="interface">
@@ -131,10 +137,16 @@ const Interface = () => {
           <div className="main_button" onClick={menuControls}>
             controls
           </div>
-          {/* <div className="setting_container">
-            <h3 className="subtitle">Randomized targets</h3>
-            <input className="checkbox" type="checkbox" />
-          </div> */}
+          <div className="setting_container">
+            <h3 className="subtitle">Turn on beacons</h3>
+            <input
+              onChange={onChange}
+              name="beacons"
+              className="checkbox"
+              type="checkbox"
+              checked={beaconsOn}
+            />
+          </div>
         </div>
       )}
 
@@ -216,7 +228,9 @@ const Interface = () => {
       {/* Restart */}
       {phase === "failed" && (
         <div className="button_container">
-          <h1 className="title">You crashed :/</h1>
+          <h1 className="title">
+            {flewOutOfMap ? "Try staying in the map" : "You crashed :/"}
+          </h1>
           <div className="main_button" onClick={ready}>
             Main menu
           </div>

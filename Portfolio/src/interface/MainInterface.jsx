@@ -30,7 +30,7 @@ const MainInterface = () => {
               <div className={`${styles.corner} ${styles.topLeft}`}>
                 <div className={styles.screenOverlay}>
                   <div className={styles.text}>
-                    Tip: explore this world and interact with the red point of
+                    Tip: explore this world and interact with the red points of
                     interest.
                   </div>
                 </div>

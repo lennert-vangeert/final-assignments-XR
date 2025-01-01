@@ -1,6 +1,7 @@
 import { RigidBody } from "@react-three/rapier";
 import React, { useEffect, useState } from "react";
 import useGame from "../stores/useGame";
+import { Float } from "@react-three/drei";
 
 const Ring = ({ diameter, position, rotY }) => {
   const [isVisible, setIsVisible] = useState(true);
@@ -9,8 +10,8 @@ const Ring = ({ diameter, position, rotY }) => {
   const end = useGame((state) => state.end);
   const ringLocations = useGame((state) => state.ringLocations);
   const isMusicOn = useGame((state) => state.isMusicOn);
+  const beaconsOn = useGame((state) => state.beaconsOn);
   const audio = new Audio("/audio/collect.mp3");
-
 
   const playAudio = () => {
     if (!isMusicOn) return;
@@ -19,33 +20,6 @@ const Ring = ({ diameter, position, rotY }) => {
     audio.volume = 0.5;
     audio.play();
   };
-
-  // const { positionX, positionY, positionZ, rotationY } = useControls({
-  //   positionX: {
-  //     value: 0,
-  //     min: -650,
-  //     max: 650,
-  //     step: 1,
-  //   },
-  //   positionY: {
-  //     value: 0,
-  //     min: -650,
-  //     max: 650,
-  //     step: 1,
-  //   },
-  //   positionZ: {
-  //     value: 0,
-  //     min: -650,
-  //     max: 650,
-  //     step: 1,
-  //   },
-  //   rotationY: {
-  //     value: 0,
-  //     min: -Math.PI,
-  //     max: Math.PI,
-  //     step: 0.01,
-  //   },
-  // });
 
   const onCollission = (() => {
     let hasCollided = false;
@@ -65,27 +39,47 @@ const Ring = ({ diameter, position, rotY }) => {
     }
   }, [score]);
 
-  // position={position}
-  // rotation={rotY}
-  {
-    /* <torusGeometry args={[diameter, 0.8, 16, 100]} /> */
-  }
-
   return (
     isVisible && (
-      <RigidBody
-        onCollisionEnter={onCollission}
-        type="dynamic"
-        gravityScale={0}
-        position={position}
-        rotation={rotY}
-        colliders="hull"
-      >
-        <mesh>
-          <torusGeometry args={[diameter, 0.8, 16, 100]} />
-          <meshStandardMaterial color="red" />
-        </mesh>
-      </RigidBody>
+      <>
+        {/* The Ring */}
+        <RigidBody
+          onCollisionEnter={onCollission}
+          type="dynamic"
+          gravityScale={0}
+          position={position}
+          rotation={rotY}
+          colliders="hull"
+        >
+          <mesh>
+            <torusGeometry args={[diameter, 0.8, 16, 100]} />
+            <meshStandardMaterial color="red" />
+          </mesh>
+        </RigidBody>
+
+        {/* The Beacon */}
+        {beaconsOn && (
+          <Float
+            position={[position[0], position[1] + 30, position[2]]}
+            speed={0.5}
+            rotationIntensity={0.2}
+            floatIntensity={0.2}
+          >
+            <group>
+              {/* Top cone */}
+              <mesh position={[0, 40, 0]}>
+                <coneGeometry args={[diameter * 0.5, 40, 4]} />
+                <meshStandardMaterial color="red" transparent opacity={0.3} />
+              </mesh>
+              {/* Bottom cone */}
+              <mesh rotation={[Math.PI, 0, 0]}>
+                <coneGeometry args={[diameter * 0.5, 40, 4]} />
+                <meshStandardMaterial color="red" transparent opacity={0.3} />
+              </mesh>
+            </group>
+          </Float>
+        )}
+      </>
     )
   );
 };

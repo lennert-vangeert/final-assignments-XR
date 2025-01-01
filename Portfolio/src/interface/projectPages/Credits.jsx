@@ -68,6 +68,9 @@ const Credits = () => {
               Pixabay
             </a>
           </li>
+          <li>
+            Interface inspired by{" "} Hyperplexed
+          </li>
         </ul>
       </div>
     </div>

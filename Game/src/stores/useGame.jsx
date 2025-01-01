@@ -12,6 +12,8 @@ export default create(
       isMusicOn: localStorage.getItem("isMusicOn") || false,
       score: 0,
       crashed: false,
+      beaconsOn: false,
+      flewOutOfMap: false,
       ringLocations: [
         // x, y, z, rotY
         [4, -10, -68, 0],
@@ -35,7 +37,12 @@ export default create(
         console.log("start");
         set((state) => {
           if (state.phase === "ready") {
-            return { phase: "playing", startTime: Date.now(), score: 0 };
+            return {
+              phase: "playing",
+              startTime: Date.now(),
+              score: 0,
+              flewOutOfMap: false,
+            };
           }
 
           return {};
@@ -116,6 +123,16 @@ export default create(
       addScore: () => {
         set((state) => {
           return { score: state.score + 1 };
+        });
+      },
+      toggleBeacons: () => {
+        set((state) => {
+          return { beaconsOn: !state.beaconsOn };
+        });
+      },
+      setFlewOutOfMapOn: () => {
+        set(() => {
+          return { flewOutOfMap: true };
         });
       },
     };
