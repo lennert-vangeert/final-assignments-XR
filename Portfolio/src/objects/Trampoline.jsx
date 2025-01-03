@@ -1,6 +1,5 @@
 import { useGLTF } from "@react-three/drei";
-import { CuboidCollider, RigidBody } from "@react-three/rapier";
-import { useControls } from "leva";
+import { RigidBody } from "@react-three/rapier";
 import { useEffect } from "react";
 
 const Trampoline = ({ playerRigidBody }) => {
@@ -15,11 +14,6 @@ const Trampoline = ({ playerRigidBody }) => {
     });
   }, []);
 
-  const { posX, posY, posZ } = useControls("Trampoline", {
-    posX: { value: -2.8, min: -20, max: 50 },
-    posY: { value: -3.9, min: -50, max: 50 },
-    posZ: { value: 26.6, min: -20, max: 50 },
-  });
 
   const onCollision = () => {
     if (playerRigidBody?.current) {
