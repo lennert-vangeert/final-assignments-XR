@@ -36,8 +36,6 @@ const MainInterface = () => {
                 </div>
               </div>
             </div>
-            {/* <div className={`${styles.corner} ${styles.topRight}`}></div> */}
-            {/* <div className={`${styles.corner} ${styles.bottomLeft}`}></div> */}
             <div className={`${styles.corner} ${styles.bottomRight}`}>
               <div className={styles.screenOverlay}>
                 <div className={styles.text}>

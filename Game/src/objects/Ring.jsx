@@ -42,7 +42,6 @@ const Ring = ({ diameter, position, rotY }) => {
   return (
     isVisible && (
       <>
-        {/* The Ring */}
         <RigidBody
           onCollisionEnter={onCollission}
           type="dynamic"
@@ -57,7 +56,6 @@ const Ring = ({ diameter, position, rotY }) => {
           </mesh>
         </RigidBody>
 
-        {/* The Beacon */}
         {beaconsOn && (
           <Float
             position={[position[0], position[1] + 30, position[2]]}
@@ -66,12 +64,10 @@ const Ring = ({ diameter, position, rotY }) => {
             floatIntensity={0.2}
           >
             <group>
-              {/* Top cone */}
               <mesh position={[0, 40, 0]}>
                 <coneGeometry args={[diameter * 0.5, 40, 4]} />
                 <meshStandardMaterial color="red" transparent opacity={0.3} />
               </mesh>
-              {/* Bottom cone */}
               <mesh rotation={[Math.PI, 0, 0]}>
                 <coneGeometry args={[diameter * 0.5, 40, 4]} />
                 <meshStandardMaterial color="red" transparent opacity={0.3} />

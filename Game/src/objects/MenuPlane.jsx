@@ -117,7 +117,6 @@ const MenuPlane = () => {
       rotation={[0, Math.PI * 0.65, Math.PI * -0.05]}
       position={[-198, 113, 265]}
     >
-      {/* <OrbitControls makeDefault /> */}
       <primitive
         object={plane.scene}
         scale={1}

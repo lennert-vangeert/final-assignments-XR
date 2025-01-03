@@ -11,40 +11,6 @@ const DeadZones = () => {
 
   const collissionSound = new Audio("/audio/hit.mp3");
 
-  const { lengthX, lengthY, lengthZ, positionX, positionY, positionZ } =
-    useControls({
-      lengthX: {
-        value: 100,
-        min: 0,
-        max: 1000,
-      },
-      lengthY: {
-        value: 100,
-        min: 0,
-        max: 1000,
-      },
-      lengthZ: {
-        value: 100,
-        min: 0,
-        max: 1000,
-      },
-      positionX: {
-        value: 0,
-        min: -1000,
-        max: 1000,
-      },
-      positionY: {
-        value: 0,
-        min: -1000,
-        max: 1000,
-      },
-      positionZ: {
-        value: 0,
-        min: -1000,
-        max: 1000,
-      },
-    });
-
   const onCollission = () => {
     setFlewOutOfMapOn();
     if (phase === "playing") {
