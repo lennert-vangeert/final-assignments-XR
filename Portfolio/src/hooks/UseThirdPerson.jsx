@@ -7,6 +7,7 @@ import { useKeyboardControls } from "@react-three/drei";
 import { useControls } from "leva";
 import { degToRad } from "three/src/math/MathUtils.js";
 import useWorld from "./useWorld";
+import Trampoline from "../objects/Trampoline";
 
 const normalizeAngle = (angle) => {
   while (angle > Math.PI) angle -= 2 * Math.PI;
@@ -151,22 +152,25 @@ const UseThirdPerson = () => {
   });
 
   return (
-    <RigidBody
-      canSleep={false}
-      colliders={false}
-      lockRotations
-      ref={rigidBodyRef}
-    >
-      <group ref={container}>
-        <group ref={cameraTarget} position-z={1.5}></group>
-        <group ref={cameraPosition} position-y={0.75} position-z={-2}></group>
-
-        <group ref={player}>
-          <Player currentAnimation={animation} />
+    <>
+      <RigidBody
+        canSleep={false}
+        colliders={false}
+        lockRotations
+        ref={rigidBodyRef}
+      >
+        <group ref={container}>
+          <group ref={cameraTarget} position-z={1.5}></group>
+          <group ref={cameraPosition} position-y={0.75} position-z={-2}></group>
+  
+          <group ref={player}>
+            <Player currentAnimation={animation} />
+          </group>
         </group>
-      </group>
-      <CapsuleCollider position={[0, 0.3, 0]} args={[0.2, 0.1]} />
-    </RigidBody>
+        <CapsuleCollider position={[0, 0.3, 0]} args={[0.2, 0.1]} />
+      </RigidBody>
+      <Trampoline playerRigidBody={rigidBodyRef} />
+    </>
   );
 };
 

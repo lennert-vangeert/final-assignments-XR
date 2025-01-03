@@ -7,6 +7,15 @@ import Car from "./projectPages/Car";
 import Credits from "./projectPages/Credits";
 
 const MainInterface = () => {
+  const tips = [
+    " explore this world and interact with the red points of interest.",
+    " You can toggle streetlights by clicking them.",
+    " that trampoline looks bouncy.",
+    " you can jump with the spacebar.",
+    " you can move with the arrow keys or WASD.",
+    " you can contact me by clicking the bottom right corner.",
+  ];
+
   const phase = useWorld((state) => state.phase);
   const menuPhase = useWorld((state) => state.menuPhase);
   return (
@@ -29,9 +38,8 @@ const MainInterface = () => {
             <div className={styles.cornerContainer}>
               <div className={`${styles.corner} ${styles.topLeft}`}>
                 <div className={styles.screenOverlay}>
-                  <div className={styles.text}>
-                    Tip: explore this world and interact with the red points of
-                    interest.
+                  <div className={styles.text}>Tip:
+                    {tips[Math.floor(Math.random() * tips.length)]}
                   </div>
                 </div>
               </div>

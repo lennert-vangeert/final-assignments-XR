@@ -1,9 +1,10 @@
 import { useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const StreetLight = ({ positionX, positionY, positionZ, rotation, light }) => {
   const { scene } = useGLTF("/models/streetlight/streetlight.gltf");
+  const [coneVisible, setConeVisible] = useState(true); 
 
   const clonedScene = scene.clone();
 
@@ -14,7 +15,6 @@ const StreetLight = ({ positionX, positionY, positionZ, rotation, light }) => {
     rotation = 0;
   }
 
-
   useEffect(() => {
     clonedScene.traverse((child) => {
       if (child.isMesh) {
@@ -24,38 +24,41 @@ const StreetLight = ({ positionX, positionY, positionZ, rotation, light }) => {
     });
   }, [clonedScene]);
 
-  return (
-    <group rotation={[0, rotation, 0]}>
-      <RigidBody restitution={0} friction={1} type="fixed" colliders="trimesh">
+  const toggleCone = () => {
+    setConeVisible(!coneVisible);
+  };
 
+  return (
+    <group rotation={[0, rotation, 0]} onClick={toggleCone}>
+      <RigidBody restitution={0} friction={1} type="fixed" colliders="trimesh">
         <primitive
           object={clonedScene}
           scale={0.4}
           position={[positionX, positionY, positionZ]}
         />
-
       </RigidBody>
-      <mesh
-        position={[positionX + 7.5, positionY + 0.4, positionZ + 0.65]} 
-      >
-        <coneGeometry args={[1, 3, 32]} /> 
-        <meshStandardMaterial
-          color={"#ffd27f"}
-          transparent={true}
-          opacity={0.5} 
-          emissive={"#ffd27f"}
-          emissiveIntensity={0.2} 
-        />
-      </mesh>
+
+      {coneVisible && (
+        <mesh position={[positionX + 7.5, positionY + 0.4, positionZ + 0.65]}>
+          <coneGeometry args={[1, 3, 32]} />
+          <meshStandardMaterial
+            color={"#ffd27f"}
+            transparent={true}
+            opacity={0.5}
+            emissive={"#ffd27f"}
+            emissiveIntensity={0.2}
+          />
+        </mesh>
+      )}
 
       {light && (
         <directionalLight
-          position={[positionX, positionY, positionZ]} 
-          intensity={.25} 
+          position={[positionX, positionY, positionZ]}
+          intensity={0.25}
           castShadow
-          color="#ffd27f" 
-          shadow-mapSize={[512, 512]} 
-          target-position={[positionX, positionY - 3, positionZ]} 
+          color="#ffd27f"
+          shadow-mapSize={[512, 512]}
+          target-position={[positionX, positionY - 3, positionZ]}
         />
       )}
     </group>
