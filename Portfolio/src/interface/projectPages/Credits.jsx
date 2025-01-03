@@ -69,8 +69,11 @@ const Credits = () => {
             </a>
           </li>
           <li>
-            Interface inspired by{" "} Hyperplexed
+            "Low Poly Trampoline" (https://skfb.ly/oqLwH) by metin1 is licensed
+            under Creative Commons Attribution
+            (http://creativecommons.org/licenses/by/4.0/).
           </li>
+          <li>Interface inspired by Hyperplexed</li>
         </ul>
       </div>
     </div>
