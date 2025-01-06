@@ -5,6 +5,9 @@ import WhiskerWings from "./projectPages/WhiskerWings";
 import Room from "./projectPages/Room";
 import Car from "./projectPages/Car";
 import Credits from "./projectPages/Credits";
+import TravelPlanner from "./projectPages/TravelPlanner";
+import Webshop from "./projectPages/Webshop";
+
 
 const MainInterface = () => {
   const tips = [
@@ -28,6 +31,8 @@ const MainInterface = () => {
             {menuPhase === "room" && <Room />}
             {menuPhase === "car" && <Car />}
             {menuPhase === "credits" && <Credits />}
+            {menuPhase === "travelplanner" && <TravelPlanner />}
+            {menuPhase === "webshop" && <Webshop />}
           </div>
           <div className={styles.blur}></div>
         </div>

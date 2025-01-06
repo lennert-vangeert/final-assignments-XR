@@ -24,6 +24,8 @@ export default create(
       ],
       poiLocations: [
         [-1.8, 6, 16.95, "whiskerwings"],
+        [-1.8, 6, 13.1, "travelplanner"],
+        [1.7, 6, 13.55, "webshop"],
         [1, 6, 19.1, "room"],
         [10.3, 6, 12.5, "car"],
         [-2, 6, 0, "credits"],

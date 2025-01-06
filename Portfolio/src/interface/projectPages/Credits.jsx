@@ -74,6 +74,10 @@ const Credits = () => {
             (http://creativecommons.org/licenses/by/4.0/).
           </li>
           <li>Interface inspired by Hyperplexed</li>
+          <li>
+            Climbing holds (https://skfb.ly/ovHuz) by kender is licensed under Creative
+            Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+          </li>
         </ul>
       </div>
     </div>
