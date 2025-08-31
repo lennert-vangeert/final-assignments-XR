@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from "react";
+// Plane.jsx (or Plane.js)
+import { useEffect, useRef } from "react";
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { CuboidCollider } from "@react-three/rapier";
 import { AnimationClip, Matrix4, Quaternion, Vector3 } from "three";
@@ -53,21 +54,28 @@ const Plane = () => {
   const smokeAnimations = useAnimations(smoke.animations, smoke.scene);
   const animationspeed = 1;
   useEffect(() => {
-    const singleTrack = planeAnimations.actions.Animation._clip.tracks[1];
+    // guard: make sure animation exists
+    if (planeAnimations.actions && planeAnimations.actions.Animation && planeAnimations.actions.Animation._clip) {
+      const tracks = planeAnimations.actions.Animation._clip.tracks;
+      if (tracks && tracks.length > 1) {
+        const singleTrack = tracks[1];
+        const singleTrackClip = new AnimationClip("SingleTrackAnimation", -1, [singleTrack]);
+        const singleTrackAction = planeAnimations.mixer.clipAction(singleTrackClip);
+        planeAnimations.mixer.timeScale = animationspeed;
+        singleTrackAction.play();
+      }
+    }
 
-    const singleTrackClip = new AnimationClip("SingleTrackAnimation", -1, [
-      singleTrack,
-    ]);
+    if (smokeAnimations.actions && smokeAnimations.actions["Default Take"]) {
+      smokeAnimations.actions["Default Take"].play();
+    }
+  }, [animationspeed, planeAnimations, smokeAnimations]);
 
-    const singleTrackAction = planeAnimations.mixer.clipAction(singleTrackClip);
-    planeAnimations.mixer.timeScale = animationspeed;
-    singleTrackAction.play();
+  useFrame((state, delta) => {
+    const { camera } = state;
 
-    smokeAnimations.actions["Default Take"].play();
-  }, [animationspeed]);
-
-  useFrame(({ camera }) => {
-    updatePlaneAxis(x, y, z, planePosition, camera, crashed);
+    // Pass delta to updatePlaneAxis so movement scales with time
+    updatePlaneAxis(x, y, z, planePosition, camera, crashed, delta);
 
     const rotMatrix = new Matrix4().makeBasis(x, y, z);
 
@@ -81,13 +89,16 @@ const Plane = () => {
       )
       .multiply(rotMatrix);
 
-    groupRef.current.matrixAutoUpdate = false;
-    groupRef.current.matrix.copy(matrix);
-    groupRef.current.matrixWorldNeedsUpdate = true;
+    if (groupRef.current) {
+      groupRef.current.matrixAutoUpdate = false;
+      groupRef.current.matrix.copy(matrix);
+      groupRef.current.matrixWorldNeedsUpdate = true;
+    }
 
     const quaternionA = new Quaternion().copy(delayedQuaternion);
     const quaternionB = new Quaternion().setFromRotationMatrix(rotMatrix);
 
+    // small slerp toward desired rotation (keeps it smooth)
     const interpolationFactor = 0.175;
     quaternionA.slerp(quaternionB, interpolationFactor);
     delayedQuaternion.copy(quaternionA);
@@ -116,15 +127,24 @@ const Plane = () => {
     camera.matrix.copy(cameraMatrix);
     camera.matrixWorldNeedsUpdate = true;
 
-    helixMeshRef.current.rotation.z -= 1.0;
+    // rotate helix based on time (radians per second)
+    if (helixMeshRef.current) {
+      const helixRotationSpeed = 6.0; // radians per second (tweak as desired)
+      helixMeshRef.current.rotation.z -= helixRotationSpeed * delta;
+    }
 
     if (colliderRef.current) {
       const colliderOffset = new Vector3(0, 2, 0);
       const adjustedPosition = planePosition
         .clone()
         .add(colliderOffset.applyQuaternion(delayedQuaternion));
-      colliderRef.current.setTranslation(adjustedPosition);
-      colliderRef.current.setRotation(delayedQuaternion);
+      // rapier cuboid collider methods
+      if (colliderRef.current.setTranslation) {
+        colliderRef.current.setTranslation(adjustedPosition);
+      }
+      if (colliderRef.current.setRotation) {
+        colliderRef.current.setRotation(delayedQuaternion);
+      }
     }
   });
 

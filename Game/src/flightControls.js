@@ -1,3 +1,4 @@
+// flightControls.js
 import useGame from "./stores/useGame";
 
 function easeOutQuad(x) {
@@ -13,54 +14,79 @@ window.addEventListener("keyup", (e) => {
   controls[e.key.toLowerCase()] = false;
 });
 
-let maxVelocity = 0.02;
+export let SPEED = 2.5;
+export let TURN_SPEED = 2.5;
+
 let jawVelocity = 0;
 let pitchVelocity = 0;
 let yawVelocity = 0;
-let planeSpeed = 0.2;
-let counter = 0;
 export let turbo = 0;
 
-export function updatePlaneAxis(x, y, z, planePosition, camera, reset) {
+// ---- continuous-time constants (per-second units) ----
+const MAX_VELOCITY = 3.0; // radians per second (max angular velocity)
+const ACCEL = 2.0; // radians per second^2 (angular accel)
+const TURBO_INC = 1.5; // turbo build per second while shift held
+const PLANE_SPEED = 10.0; // units per second (forward base speed)
+const TURBO_SPEED = 6.0; // additional speed at full turbo (units/sec)
+
+// damping constants (use exponential decay: vel *= exp(-damping * delta))
+const JAW_DAMPING = 6.0; // per second
+const PITCH_YAW_DAMPING = 6.5; // per second
+
+// Camera FOV smoothing & limits
+const CAMERA_FOV_BASE = 45;
+const CAMERA_FOV_MAX_ADD = 25; // how many degrees FOV can increase at full turbo
+const CAMERA_FOV_SMOOTHNESS = 8.0; // larger = faster interpolation
+
+export function updatePlaneAxis(
+  x,
+  y,
+  z,
+  planePosition,
+  camera,
+  reset,
+  delta = 1 / 60
+) {
   if (reset) {
     console.log("reset");
   }
 
-  jawVelocity *= 0.95;
-  pitchVelocity *= 0.9;
-  yawVelocity *= 0.9;
+  // decay velocities smoothly (continuous-time)
+  const jawDecay = Math.exp(-JAW_DAMPING * delta);
+  const pitchYawDecay = Math.exp(-PITCH_YAW_DAMPING * delta);
 
-  if (Math.abs(jawVelocity) > maxVelocity)
-    jawVelocity = Math.sign(jawVelocity) * maxVelocity;
+  jawVelocity *= jawDecay;
+  pitchVelocity *= pitchYawDecay;
+  yawVelocity *= pitchYawDecay;
 
-  if (Math.abs(pitchVelocity) > maxVelocity)
-    pitchVelocity = Math.sign(pitchVelocity) * maxVelocity;
+  // clamp according to max, scaled by TURN_SPEED
+  const maxVel = MAX_VELOCITY * TURN_SPEED;
+  if (Math.abs(jawVelocity) > maxVel)
+    jawVelocity = Math.sign(jawVelocity) * maxVel;
+  if (Math.abs(pitchVelocity) > maxVel)
+    pitchVelocity = Math.sign(pitchVelocity) * maxVel;
+  if (Math.abs(yawVelocity) > maxVel)
+    yawVelocity = Math.sign(yawVelocity) * maxVel;
 
-  if (Math.abs(yawVelocity) > maxVelocity)
-    yawVelocity = Math.sign(yawVelocity) * maxVelocity;
-
+  // Inputs: acceleration scaled by delta and TURN_SPEED (for responsiveness)
+  const accelThisFrame = ACCEL * delta * TURN_SPEED;
   if (controls["a"] || controls["q"]) {
-    jawVelocity += 0.001;
+    jawVelocity += accelThisFrame;
   }
-
   if (controls["d"]) {
-    jawVelocity -= 0.001;
+    jawVelocity -= accelThisFrame;
   }
-
   if (controls["w"] || controls["z"] || controls["arrowup"]) {
-    pitchVelocity -= 0.001;
+    pitchVelocity -= accelThisFrame;
   }
-
   if (controls["s"] || controls["arrowdown"]) {
-    pitchVelocity += 0.001;
+    pitchVelocity += accelThisFrame;
   }
-
   if (controls["arrowleft"]) {
-    yawVelocity += 0.001;
+    yawVelocity += accelThisFrame;
   }
-
   if (controls["arrowright"]) {
-    yawVelocity -= 0.001;
+    yawVelocity -= accelThisFrame;
   }
 
   if (controls["r"] || reset) {
@@ -74,30 +100,40 @@ export function updatePlaneAxis(x, y, z, planePosition, camera, reset) {
     planePosition.set(0, 3, 7);
   }
 
-  x.applyAxisAngle(z, jawVelocity);
-  y.applyAxisAngle(z, jawVelocity);
+  // apply rotations using velocities (radians/sec) scaled by delta
+  x.applyAxisAngle(z, jawVelocity * delta);
+  y.applyAxisAngle(z, jawVelocity * delta);
 
-  y.applyAxisAngle(x, pitchVelocity);
-  z.applyAxisAngle(x, pitchVelocity);
+  y.applyAxisAngle(x, pitchVelocity * delta);
+  z.applyAxisAngle(x, pitchVelocity * delta);
 
-  x.applyAxisAngle(y, yawVelocity);
-  z.applyAxisAngle(y, yawVelocity);
+  x.applyAxisAngle(y, yawVelocity * delta);
+  z.applyAxisAngle(y, yawVelocity * delta);
 
   x.normalize();
   y.normalize();
   z.normalize();
 
+  // turbo accumulation / decay in continuous time
   if (controls.shift) {
-    turbo += 0.025;
+    turbo += TURBO_INC * delta * SPEED;
   } else {
-    turbo *= 0.95;
+    // exponential decay toward zero when not holding shift
+    turbo *= Math.exp(-2.5 * delta);
   }
   turbo = Math.min(Math.max(turbo, 0), 1);
 
-  let turboSpeed = easeOutQuad(turbo) * 0.02;
+  // turbo speed in units/sec scaled by SPEED
+  let turboSpeedPerSec = TURBO_SPEED * turbo * SPEED;
 
-  camera.fov = 45 + turboSpeed * 900;
+  // camera FOV: smooth interpolation to target to avoid wild jumps
+  const targetFov = CAMERA_FOV_BASE + easeOutQuad(turbo) * CAMERA_FOV_MAX_ADD;
+  // smooth factor based on delta
+  const lerpFactor = 1 - Math.exp(-CAMERA_FOV_SMOOTHNESS * delta);
+  camera.fov = camera.fov + (targetFov - camera.fov) * lerpFactor;
   camera.updateProjectionMatrix();
 
-  planePosition.add(z.clone().multiplyScalar(-planeSpeed - turboSpeed));
+  // move plane forward (per-second plane speed scaled by SPEED) and apply delta
+  const forwardSpeed = PLANE_SPEED * SPEED + turboSpeedPerSec;
+  planePosition.add(z.clone().multiplyScalar(-forwardSpeed * delta));
 }
